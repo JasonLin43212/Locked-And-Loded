@@ -1,13 +1,17 @@
-XXXXXXXXXXXXXXXXXXXX
-X                  X
-X         a        X
-X                  X
-X        5         X
-X                  X
-X       3          X
-X          g       X
-X                  X
-XXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                        X   X
+X                        X   X
+X a                      X   X
+X                        X   X
+X                        X   X
+X                            X
+X                            X
+X                    OOOOOO  X
+X                  XXXXXXXXXXX
+XXXXXXXXXXX                  X
+X         O                  X
+X             O              X
+X                   O        X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 3
 5
-2

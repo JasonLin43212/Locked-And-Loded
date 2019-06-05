@@ -52,7 +52,7 @@ public abstract class Entity {
   public void display() {
     fill(entityColor);
     stroke(1);
-    ellipse(x, y, 30, 30);
+    ellipse(x, y, 20, 20);
     //pushMatrix();
     //translate(x+15, y+15);
     //rotate(direction);
