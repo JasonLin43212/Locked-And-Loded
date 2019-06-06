@@ -23,16 +23,42 @@ public abstract class Entity {
   }
 
   public void move() {
-    //if (movementCounter > 0) {
-    //  movementCounter--;
-    //}
-    //float[] newLocation = collide(currentMap);
-    //x = newLocation[0];
-    //y = newLocation[1];
-    x += speed*(right-left);
-    y += speed*(down-up);
-    //}
+    float newX = x+speed*(right-left);
+    float newY = y+speed*(down-up);
+    if (!isCollidedX(newX, newY) && !isCornerCollide(newX, newY)) {
+      x = newX;
+    }
+    if (!isCollidedY(newX, newY) && !isCornerCollide(newX, newY)) {
+      y = newY;
+    }
   }
+
+  private boolean isCornerCollide(float x, float y) {
+    if (map[(int)((x+9)/40)][(int)((y-75+9)/40)] == 'X' || map[(int)((x+9)/40)][(int)((y-75+9)/40)] == 'O' ||
+      map[(int)((x-9)/40)][(int)((y-75-9)/40)] == 'X' || map[(int)((x-9)/40)][(int)((y-75-9)/40)] == 'O' ||
+      map[(int)((x+9)/40)][(int)((y-75-9)/40)] == 'X' || map[(int)((x+9)/40)][(int)((y-75-9)/40)] == 'O' ||
+      map[(int)((x-9)/40)][(int)((y-75+9)/40)] == 'X' || map[(int)((x-9)/40)][(int)((y-75+9)/40)] == 'O') {
+      return true;
+    }
+    return false;
+  }
+
+  private boolean isCollidedX(float x, float y) {
+    if (map[(int)((x+15)/40)][(int)((y-75)/40)] == 'X' || map[(int)((x+15)/40)][(int)((y-75)/40)] == 'O' ||
+      map[(int)((x-15)/40)][(int)((y-75)/40)] == 'X' || map[(int)((x-15)/40)][(int)((y-75)/40)] == 'O') {
+      return true;
+    }
+    return false;
+  }
+
+  private boolean isCollidedY(float x, float y) {
+    if (map[(int)(x/40)][(int)((y-75+15)/40)] == 'X' || map[(int)(x/40)][(int)((y-75+15)/40)] == 'O' ||
+      map[(int)(x/40)][(int)((y-75-15)/40)] == 'X' || map[(int)(x/40)][(int)((y-75-15)/40)] == 'O') {
+      return true;
+    }
+    return false;
+  }
+
 
   public void controlMovement(int num, int mode) {
     if (num == 87) {
@@ -48,11 +74,11 @@ public abstract class Entity {
       right=mode;
     }
   }
-  
+
   public void display() {
     fill(entityColor);
     stroke(1);
-    ellipse(x, y, 20, 20);
+    circle(x, y, 20);
     //pushMatrix();
     //translate(x+15, y+15);
     //rotate(direction);

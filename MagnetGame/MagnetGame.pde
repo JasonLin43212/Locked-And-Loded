@@ -18,38 +18,52 @@ void draw() {
 }  
 
 void drawMag(int tile_x, int tile_y, int magnitude, boolean is_X) {
-  float[][] spacings = {{20,20},{13,13,26,26},{10,10,20,20,30,30},{13,13,13,26,26,13,26,26},
-                        {10,10,20,20,30,30,10,30,30,10},{13,10,13,20,13,30,26,10,26,20,26,30},
-                        {10,10,10,20,10,30,20,20,30,10,30,20,30,30},
-                        {10,10,10,20,10,30,30,10,30,20,30,30,20,10,20,30},
-                        {10,10,10,20,10,30,30,10,30,20,30,30,20,10,20,30,20,20}};
+  int[][] spacings = {{20, 20}, {11, 11, 29, 29}, {9, 9, 20, 20, 31, 31}, {11, 11, 11, 29, 29, 11, 29, 29}, 
+    {9, 9, 20, 20, 31, 31, 9, 31, 31, 9}, {11, 9, 11, 20, 11, 31, 29, 9, 29, 20, 29, 31}, 
+    {9, 9, 9, 20, 9, 31, 20, 20, 31, 9, 31, 20, 31, 31}, 
+    {9, 9, 9, 20, 9, 31, 31, 9, 31, 20, 31, 31, 20, 9, 20, 31}, 
+    {9, 9, 9, 20, 9, 31, 31, 9, 31, 20, 31, 31, 20, 9, 20, 31, 20, 20}};
+  fill(228, 225, 169);
+  stroke(228, 225, 169);
+  rect(tile_x*40, tile_y*40+75, 40, 40); 
   for (int k=0; k<magnitude; k++) {
-    //stroke(255,0,0);
-    int x_center = tile_x*40 + 1;
-    //int y_center = (tile_y*30+75)+(mag_interval*(int)((k+1)/field_val));
-    //line(x_center-1, y_center-1, x_center+1, y_center+1);
-    //line(x_center-1, y_center+1, x_center+1, y_center-1);
+    int x_center = tile_x*40 + spacings[magnitude-1][k*2];
+    int y_center = (tile_y*40+75)+ spacings[magnitude-1][k*2+1];
+    strokeWeight(2);
+    if (is_X) {
+      stroke(255, 0, 0);
+      line(x_center-3, y_center-3, x_center+3, y_center+3);
+      line(x_center-3, y_center+3, x_center+3, y_center-3);
+    }
+    else {
+      stroke(34,139,34);
+      strokeWeight(1);
+      circle(x_center,y_center,8);
+      strokeWeight(3);
+      line(x_center,y_center,x_center,y_center);
+    }
   }
 }
 
 void drawMap() {
   for (int i=0; i<15; i++) {
     for (int j=0; j<30; j++) {
+      strokeWeight(1);
       //Draw floor
       if (map[j][i] == ' ') {
-        //stroke(228, 225, 169);
+        stroke(228, 225, 169);
         fill(228, 225, 169);
         rect(j*40, i*40+75, 40, 40);
       }
       //Draw Walls
       else if (map[j][i] == 'X') {
-        //stroke(128,128,128);
+        stroke(128, 128, 128);
         fill(128, 128, 128);
         rect(j*40, i*40+75, 40, 40);
       }
       //Draw pits
       else if (map[j][i] == 'O') {
-        //stroke(0,0,0);
+        stroke(0, 0, 0);
         fill(0, 0, 0);
         rect(j*40, i*40+75, 40, 40);
       }
@@ -59,7 +73,11 @@ void drawMap() {
         // Point into the screen
         if (field_val > 96 && field_val < 106) {
           field_val -= 96;
-          //drawMag(j, i, field_val, true);
+          drawMag(j, i, field_val, true);
+        }
+        else{
+          field_val -= 48;
+          drawMag(j, i, field_val, false);
         }
       }
     }
