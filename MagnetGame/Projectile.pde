@@ -44,7 +44,7 @@ public abstract class Projectile {
         .div(mass);
       v.add(a);
     }
-    println(v.mag());
+    //println(v.mag());
     if ((x+v.x)/40<map.length){
       x+=v.x;
       if(map[(int)((x-10)/40)][(int)((y-75)/40)]=='X'||map[(int)((x+10)/40)][(int)((y-75)/40)]=='X'){

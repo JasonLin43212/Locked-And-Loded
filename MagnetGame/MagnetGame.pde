@@ -1,11 +1,10 @@
 Player player = new Player(300, 300);
-PVector v=new PVector(2.0,2.0);
-Proton test = new Proton(320,300,v);
+PVector v=new PVector(2.0, 2.0);
+Proton test = new Proton(320, 300, v);
 char[][] map = new char[30][15];
 int timeInterval = 0;
 String[] change;
 int changeIndex = 0;
-int[] map_info;
 
 int intervalCountdown = 0;
 
@@ -25,25 +24,64 @@ void draw() {
   test.display();
   test.move();
   intervalCountdown--; 
+  if (intervalCountdown == 0){
     intervalCountdown = timeInterval;
     changeIndex++;
     if (changeIndex == change.length) {
       changeIndex = 0;
     }
+    changeFields();
   }
-}  
+  
+}
 
+void changeFields() {
   for (int i=0; i<15; i++) {
     for (int j=0; j<30; j++) {
       int field_val = (int)map[j][i];
+      int current_change = parseInt(change[changeIndex]);
       //Out of screen
       if (field_val > 96 && field_val < 106) {
+        println(field_val);
         field_val -= 96;
-        
+        if (field_val > 9){
+           field_val = 9; 
+        }
+        char new_field = 0;
+        if (current_change == 0){
+           new_field = (char)(field_val+48); 
+           if (new_field > 57){
+              new_field = 57; 
+           }
+        }
+        else {
+           new_field = (char)(field_val+96+current_change); 
+           if (new_field > 105){
+              new_field = 105; 
+           }
+        }
+        println("write " +new_field);
+        map[j][i] = new_field;
       }
       // Point into the screen
-      else if (field_val > 48 && field_val < 58){
+      else if (field_val > 48 && field_val < 58) {
+        println(field_val);
         field_val -= 48;
+        char new_field = 0;
+        if (current_change == 0){
+           new_field = (char)(field_val+96);
+           if (new_field > 105){
+              new_field = 105; 
+           }
+        }
+        else {
+           new_field = (char)(field_val+48-current_change); 
+           if (new_field > 57){
+              new_field = 57; 
+           }
+        }
+        println("write " +new_field);
+        map[j][i] = new_field;
       }
     }
   }
