@@ -67,13 +67,24 @@ public abstract class Entity {
       y = newY;
       x = newX;
       if (map[(int)((x+11)/40)][(int)((y-75)/40)] == 'X' || map[(int)((x+11)/40)][(int)((y-75)/40)] == 'O' ||
-        map[(int)((x+20)/40)][(int)((y-75-20)/40)] == 'X' || map[(int)((x+15)/40)][(int)((y-75-20)/40)] == 'O') {
+        map[(int)((x+11)/40)][(int)((y-75-11)/40)] == 'X' || map[(int)((x+11)/40)][(int)((y-75-11)/40)] == 'O') {
         x = oldX;
       }
       //bottom wall
       if (map[(int)(x/40)][(int)((y-75+11)/40)] == 'X' || map[(int)(x/40)][(int)((y-75+11)/40)] == 'O' ||
-        map[(int)((x-20)/40)][(int)((y-75+20)/40)] == 'X' || map[(int)((x-20)/40)][(int)((y-75+20)/40)] == 'O') {
+        map[(int)((x-11)/40)][(int)((y-75+11)/40)] == 'X' || map[(int)((x-11)/40)][(int)((y-75+11)/40)] == 'O') {
         y = oldY;
+      }
+      //corner wall (right)
+      if (!(map[(int)(x/40)][(int)((y-75+11)/40)] == 'X' || map[(int)(x/40)][(int)((y-75+11)/40)] == 'O') &&
+        !(map[(int)((x+11)/40)][(int)((y-75)/40)] == 'X' || map[(int)((x+11)/40)][(int)((y-75)/40)] == 'O') &&
+        (map[(int)((x+11)/40)][(int)((y-75+11)/40)] == 'X' || map[(int)((x+11)/40)][(int)((y-75+11)/40)] == 'O')) {
+          if (oldX - ((int)(oldX/40)*40) > oldY - ((int)((oldY-75)/40)*40)){
+            y = oldY;
+          }
+          else {
+            x = oldX; 
+          }
       }
     }
     //bottom-left
@@ -89,6 +100,17 @@ public abstract class Entity {
       if (map[(int)(x/40)][(int)((y-75+11)/40)] == 'X' || map[(int)(x/40)][(int)((y-75+11)/40)] == 'O' ||
         map[(int)((x+9)/40)][(int)((y-75+9)/40)] == 'X' || map[(int)((x+9)/40)][(int)((y-75+9)/40)] == 'O') {
         y = oldY;
+      }
+      //corner wall (top)
+      if (!(map[(int)(x/40)][(int)((y-75+11)/40)] == 'X' || map[(int)(x/40)][(int)((y-75+11)/40)] == 'O') &&
+        !(map[(int)((x-11)/40)][(int)((y-75)/40)] == 'X' || map[(int)((x-11)/40)][(int)((y-75)/40)] == 'O') &&
+        (map[(int)((x-11)/40)][(int)((y-75+11)/40)] == 'X' || map[(int)((x-11)/40)][(int)((y-75+11)/40)] == 'O')) {
+          if (oldX - ((int)(oldX/40)*40) > 40 - (oldY - ((int)((oldY-75)/40)*40))){
+            x = oldX;
+          }
+          else {
+            y = oldY; 
+          }
       }
     }
     //top-right
