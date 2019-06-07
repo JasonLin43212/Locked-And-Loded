@@ -79,7 +79,7 @@ public abstract class Entity {
       if (!(map[(int)(x/40)][(int)((y-75+11)/40)] == 'X' || map[(int)(x/40)][(int)((y-75+11)/40)] == 'O') &&
         !(map[(int)((x+11)/40)][(int)((y-75)/40)] == 'X' || map[(int)((x+11)/40)][(int)((y-75)/40)] == 'O') &&
         (map[(int)((x+11)/40)][(int)((y-75+11)/40)] == 'X' || map[(int)((x+11)/40)][(int)((y-75+11)/40)] == 'O')) {
-          if (oldX - ((int)(oldX/40)*40) > oldY - ((int)((oldY-75)/40)*40)){
+          if (oldX - ((int)(oldX/40)*40) >= oldY - ((int)((oldY-75)/40)*40)){
             y = oldY;
           }
           else {
@@ -101,11 +101,11 @@ public abstract class Entity {
         map[(int)((x+9)/40)][(int)((y-75+9)/40)] == 'X' || map[(int)((x+9)/40)][(int)((y-75+9)/40)] == 'O') {
         y = oldY;
       }
-      //corner wall (top)
+      //corner wall (down)
       if (!(map[(int)(x/40)][(int)((y-75+11)/40)] == 'X' || map[(int)(x/40)][(int)((y-75+11)/40)] == 'O') &&
         !(map[(int)((x-11)/40)][(int)((y-75)/40)] == 'X' || map[(int)((x-11)/40)][(int)((y-75)/40)] == 'O') &&
         (map[(int)((x-11)/40)][(int)((y-75+11)/40)] == 'X' || map[(int)((x-11)/40)][(int)((y-75+11)/40)] == 'O')) {
-          if (oldX - ((int)(oldX/40)*40) > 40 - (oldY - ((int)((oldY-75)/40)*40))){
+          if (oldX - ((int)(oldX/40)*40) >= 40 - (oldY - ((int)((oldY-75)/40)*40))){
             x = oldX;
           }
           else {
@@ -127,6 +127,17 @@ public abstract class Entity {
         map[(int)((x-9)/40)][(int)((y-75-9)/40)] == 'X' || map[(int)((x-9)/40)][(int)((y-75-9)/40)] == 'O') {
         y = oldY;
       }
+      //corner (top)
+      if (!(map[(int)(x/40)][(int)((y-75-11)/40)] == 'X' || map[(int)(x/40)][(int)((y-75-11)/40)] == 'O') &&
+        !(map[(int)((x+11)/40)][(int)((y-75)/40)] == 'X' || map[(int)((x+11)/40)][(int)((y-75)/40)] == 'O') &&
+        (map[(int)((x+11)/40)][(int)((y-75-11)/40)] == 'X' || map[(int)((x+11)/40)][(int)((y-75-11)/40)] == 'O')) {
+          if (oldX - ((int)(oldX/40)*40) >= 40 - (oldY - ((int)((oldY-75)/40)*40))){
+            y = oldY;
+          }
+          else {
+            x = oldX; 
+          }
+      }
     }
     //top-left
     else if (hor == -1 && ver == -1) {
@@ -142,41 +153,19 @@ public abstract class Entity {
         map[(int)((x+9)/40)][(int)((y-75-9)/40)] == 'X' || map[(int)((x+9)/40)][(int)((y-75-9)/40)] == 'O') {
         y = oldY;
       }
+      //corner wall (left)
+      if (!(map[(int)(x/40)][(int)((y-75-11)/40)] == 'X' || map[(int)(x/40)][(int)((y-75-11)/40)] == 'O') &&
+        !(map[(int)((x-11)/40)][(int)((y-75)/40)] == 'X' || map[(int)((x-11)/40)][(int)((y-75)/40)] == 'O') &&
+        (map[(int)((x-11)/40)][(int)((y-75-11)/40)] == 'X' || map[(int)((x-11)/40)][(int)((y-75-11)/40)] == 'O')) {
+          if (oldX - ((int)(oldX/40)*40) >= oldY - ((int)((oldY-75)/40)*40)){
+            x = oldX;
+          }
+          else {
+            y = oldY; 
+          }
+      }
     }
-    //if (!isCollidedX(newX, newY) && !isCornerCollide(newX, newY)) {
-    //  x = newX;
-    //}
-    //if (!isCollidedY(newX, newY) && !isCornerCollide(newX, newY)) {
-    //  y = newY;
-    //}
   }
-
-  //private boolean isCornerCollide(float x, float y) {
-  //  if (map[(int)((x+9)/40)][(int)((y-75+9)/40)] == 'X' || map[(int)((x+9)/40)][(int)((y-75+9)/40)] == 'O' ||
-  //    map[(int)((x-9)/40)][(int)((y-75-9)/40)] == 'X' || map[(int)((x-9)/40)][(int)((y-75-9)/40)] == 'O' ||
-  //    map[(int)((x+9)/40)][(int)((y-75-9)/40)] == 'X' || map[(int)((x+9)/40)][(int)((y-75-9)/40)] == 'O' ||
-  //    map[(int)((x-9)/40)][(int)((y-75+9)/40)] == 'X' || map[(int)((x-9)/40)][(int)((y-75+9)/40)] == 'O') {
-  //    return true;
-  //  }
-  //  return false;
-  //}
-
-  //private boolean isCollidedX(float x, float y) {
-  //  if (map[(int)((x+15)/40)][(int)((y-75)/40)] == 'X' || map[(int)((x+15)/40)][(int)((y-75)/40)] == 'O' ||
-  //    map[(int)((x-15)/40)][(int)((y-75)/40)] == 'X' || map[(int)((x-15)/40)][(int)((y-75)/40)] == 'O') {
-  //    return true;
-  //  }
-  //  return false;
-  //}
-
-  //private boolean isCollidedY(float x, float y) {
-  //  if (map[(int)(x/40)][(int)((y-75+15)/40)] == 'X' || map[(int)(x/40)][(int)((y-75+15)/40)] == 'O' ||
-  //    map[(int)(x/40)][(int)((y-75-15)/40)] == 'X' || map[(int)(x/40)][(int)((y-75-15)/40)] == 'O') {
-  //    return true;
-  //  }
-  //  return false;
-  //}
-
 
   public void controlMovement(int num, int mode) {
     if (num == 87) {
