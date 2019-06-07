@@ -1,4 +1,6 @@
 Player player = new Player(300, 300);
+PVector v=new PVector(2.0,2.0);
+Proton test = new Proton(320,300,v);
 char[][] map = new char[30][15];
 int[] map_info;
 
@@ -15,6 +17,8 @@ void draw() {
   drawMap();
   player.display();
   player.move();
+  test.display();
+  test.move();
 }  
 
 void drawMag(int tile_x, int tile_y, int magnitude, boolean is_X) {

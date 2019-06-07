@@ -4,10 +4,10 @@ X                        X   X
 X abcdefghi              X   X
 X 12345678999999999      X   X
 X          99999999      X   X
-X                            X
-X                            X
-X                    OOOOOO  X
-X                  XXXXXXXXXXX
+X          99999999          X
+X          99999999          X
+X          99999999  OOOOOO  X
+X          99999999XXXXXXXXXXX
 XXXXXXXXXXX                  X
 X         O                  X
 X             O              X
