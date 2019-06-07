@@ -2,7 +2,12 @@ Player player = new Player(300, 300);
 PVector v=new PVector(2.0,2.0);
 Proton test = new Proton(320,300,v);
 char[][] map = new char[30][15];
+int timeInterval = 0;
+String[] change;
+int changeIndex = 0;
 int[] map_info;
+
+int intervalCountdown = 0;
 
 void setup() {
   // each tile is 40x40 pixel
@@ -19,7 +24,30 @@ void draw() {
   player.move();
   test.display();
   test.move();
+  intervalCountdown--; 
+    intervalCountdown = timeInterval;
+    changeIndex++;
+    if (changeIndex == change.length) {
+      changeIndex = 0;
+    }
+  }
 }  
+
+  for (int i=0; i<15; i++) {
+    for (int j=0; j<30; j++) {
+      int field_val = (int)map[j][i];
+      //Out of screen
+      if (field_val > 96 && field_val < 106) {
+        field_val -= 96;
+        
+      }
+      // Point into the screen
+      else if (field_val > 48 && field_val < 58){
+        field_val -= 48;
+      }
+    }
+  }
+}
 
 void drawMag(int tile_x, int tile_y, int magnitude, boolean is_X) {
   int[][] spacings = {{20, 20}, {11, 11, 29, 29}, {9, 9, 20, 20, 31, 31}, {11, 11, 11, 29, 29, 11, 29, 29}, 
@@ -30,6 +58,9 @@ void drawMag(int tile_x, int tile_y, int magnitude, boolean is_X) {
   fill(228, 225, 169);
   stroke(228, 225, 169);
   rect(tile_x*40, tile_y*40+75, 40, 40); 
+  if (magnitude > 9) {
+    magnitude = 9;
+  }
   for (int k=0; k<magnitude; k++) {
     int x_center = tile_x*40 + spacings[magnitude-1][k*2];
     int y_center = (tile_y*40+75)+ spacings[magnitude-1][k*2+1];
@@ -38,13 +69,12 @@ void drawMag(int tile_x, int tile_y, int magnitude, boolean is_X) {
       stroke(255, 0, 0);
       line(x_center-3, y_center-3, x_center+3, y_center+3);
       line(x_center-3, y_center+3, x_center+3, y_center-3);
-    }
-    else {
-      stroke(34,139,34);
+    } else {
+      stroke(34, 139, 34);
       strokeWeight(1);
-      circle(x_center,y_center,8);
+      circle(x_center, y_center, 8);
       strokeWeight(3);
-      line(x_center,y_center,x_center,y_center);
+      line(x_center, y_center, x_center, y_center);
     }
   }
 }
@@ -74,14 +104,15 @@ void drawMap() {
       //Draw magnetic fields
       else {
         int field_val = (int)map[j][i];
-        // Point into the screen
+        //Out of screen
         if (field_val > 96 && field_val < 106) {
           field_val -= 96;
-          drawMag(j, i, field_val, true);
-        }
-        else{
-          field_val -= 48;
           drawMag(j, i, field_val, false);
+        }
+        // Point into the screen
+        else {
+          field_val -= 48;
+          drawMag(j, i, field_val, true);
         }
       }
     }
@@ -98,8 +129,11 @@ void getLevel(int level) {
       map[j][i] = lines[i].charAt(j);
     }
   }
-  int time_interval = Integer.parseInt(lines[15].split("\n", 0)[0]);
-  int change = Integer.parseInt(lines[16].split("\n", 0)[0]);
+  timeInterval = Integer.parseInt(lines[15].split("\n", 0)[0]);
+  intervalCountdown = timeInterval;
+  // 1-9 (-9) - (-1)  0 for negate
+  change = lines[16].split("\n", 0)[0].split(",");
+
   //println(time_interval);
   //println(change);
   //println(print2DArr(map));
