@@ -1,9 +1,12 @@
+import java.util.*;
+import java.io.*;
 Player player = new Player(300, 300);
-Proton test = new Proton(320, 300);
-Electron teste=new Electron(320,300);
+//Proton test = new Proton(320, 300);
+//Electron teste=new Electron(320,300);
 Proton hudp= new Proton(710,720);
 Electron hude=new Electron(785,720);
-Loop testl=new Loop(400,300);
+//Loop testl=new Loop(400,300);
+ArrayList<Projectile> allProjectiles = new ArrayList<Projectile>();
 char[][] map = new char[30][15];
 int timeInterval = 0;
 String[] change;
@@ -17,19 +20,30 @@ void setup() {
   //75 pixels top and bottom for HUD
   size(1200, 750);
   getLevel(level);
+  allProjectiles.add(new Electron(120,300));
+  allProjectiles.add(new Electron(220,300));
+  allProjectiles.add(new Proton(320,300));
 }
 
 void draw() {
   background(60, 90, 120);
   drawMap();
-  
-  test.display();
-  test.move();
-  teste.display();
-  teste.move();
+  for (int i=0; i<allProjectiles.size(); i++){
+    Projectile currentProjectile = allProjectiles.get(i);
+    currentProjectile.display();
+    currentProjectile.move();
+    if (currentProjectile.v.mag() < 0.9){
+       allProjectiles.remove(currentProjectile);
+       i -= 1;
+    }
+  }
+  //test.display();
+  //test.move();
+  //teste.display();
+  //teste.move();
   hudp.display();
   hude.display();
-  testl.display();
+  //testl.display();
   player.display();
   player.move();
   fill(255, 255, 255);
@@ -229,5 +243,14 @@ void keyPressed() {
 }
 
 void keyReleased() {
+  if (keyCode == 32) {
+    player.shoot(mouseX,mouseY);
+  }
+  else {
   player.controlMovement(keyCode, 0);
+  }
+}
+
+void mouseClicked(){
+  player.shoot(mouseX,mouseY); 
 }

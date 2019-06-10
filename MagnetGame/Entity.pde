@@ -186,13 +186,7 @@ public abstract class Entity {
     fill(entityColor);
     stroke(1);
     circle(x, y, 20);
-    //pushMatrix();
-    //translate(x+15, y+15);
-    //rotate(direction);
-    //rect(2, -3, 24, 6);
-    //popMatrix();
-    //if (shootCoolDown > 0 && canFight) {
-    //  shootCoolDown--;
-    //}
   }
+  
+  public abstract void shoot(float x, float y);
 }

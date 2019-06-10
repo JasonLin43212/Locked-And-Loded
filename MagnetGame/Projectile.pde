@@ -36,6 +36,7 @@ public abstract class Projectile {
     }
     return bf;
   }
+  public abstract void display();
   public void move() {
     PVector B=new PVector(0,0,Bfield()*0.02);
     if(Bfield()!=0){
@@ -49,14 +50,14 @@ public abstract class Projectile {
       x+=v.x;
       if(map[(int)((x-10)/40)][(int)((y-75)/40)]=='X'||map[(int)((x+10)/40)][(int)((y-75)/40)]=='X'){
         v.x= -v.x;
-        v.mult(0.79);
+        v.mult(0.53);
       }
     }
     if((y+v.y-70)/40<map[0].length){
       y+=v.y;
       if(map[(int)(x/40)][(int)((y-65)/40)]=='X'||map[(int)(x/40)][(int)((y-85)/40)]=='X'){
         v.y= -v.y;
-        v.mult(0.79);
+        v.mult(0.53);
       }
     }
   }
