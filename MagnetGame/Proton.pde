@@ -1,6 +1,6 @@
 public class Proton extends Projectile {
-  public Proton(float xcor, float ycor) {
-    super(xcor, ycor, new PVector(2.0, 2.0), true, 1, 0);
+  public Proton(float xcor, float ycor, PVector v) {
+    super(xcor, ycor, v, true, 1, 0);
   }
   public void display() {
     fill(0, 255, 255);

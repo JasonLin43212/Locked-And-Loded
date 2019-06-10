@@ -1,11 +1,8 @@
 import java.util.*;
 import java.io.*;
 Player player = new Player(300, 300);
-//Proton test = new Proton(320, 300);
-//Electron teste=new Electron(320,300);
-Proton hudp= new Proton(710, 720);
+Proton hudp= new Proton(710, 720,new PVector(0,0));
 Electron hude=new Electron(785, 720);
-//Loop testl=new Loop(400,300);
 ArrayList<Projectile> allProjectiles = new ArrayList<Projectile>();
 ArrayList<Entity> allEntities = new ArrayList<Entity>();
 char[][] map = new char[30][15];
@@ -22,6 +19,9 @@ void setup() {
   size(1200, 750);
   getLevel(level);
   allEntities.add(player);
+  //allProjectiles.add(new Proton(330,330));
+  //allProjectiles.add(new Electron(430,330));
+  //allProjectiles.add(new Loop(530,330));
 }
 
 void draw() {
@@ -41,13 +41,8 @@ void draw() {
     currentEntity.display();
     currentEntity.move();
   }
-  //test.display();
-  //test.move();
-  //teste.display();
-  //teste.move();
   hudp.display();
   hude.display();
-  //testl.display();
   fill(255, 255, 255);
   textSize(18);
   text(": 10", 730, 727);

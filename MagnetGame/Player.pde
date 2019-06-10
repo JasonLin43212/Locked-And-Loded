@@ -5,7 +5,7 @@ public class Player extends Entity {
   }
 
   public void shoot(float x, float y) {
-    PVector bulletDirection = new PVector(this.x - x, this.y - y);
-    allProjectiles.add(new Proton(this.x,this.y));
+    PVector bulletDirection = new PVector(x - this.x, y - this.y);
+    allProjectiles.add(new Proton(this.x,this.y, bulletDirection.normalize().mult(3)));
   }
 }
