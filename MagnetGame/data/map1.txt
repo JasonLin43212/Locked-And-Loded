@@ -1,17 +1,17 @@
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-X                        X   X
-X                        X   X
-X          1             X   X
-X                        X   X
-X                        X   X
 X                            X
 X                            X
-X                    OOOOOO  X
-X                  XXXXXXXXXXX
-XXXXXXXXXXX                  X
-X         O                  X
-X             O              X
-X                   O        X
+X                            X
+X                            X
+X                            X
+X                            X
+X                            X
+X                            X
+X                            X
+X                            X
+X                            X
+X                            X
+X                            X
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-100
-0,1
+1000
+0

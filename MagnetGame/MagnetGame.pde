@@ -24,7 +24,7 @@ void draw() {
   test.display();
   test.move();
   intervalCountdown--; 
-  if (intervalCountdown == 0){
+  if (intervalCountdown == 0) {
     intervalCountdown = timeInterval;
     changeIndex++;
     if (changeIndex == change.length) {
@@ -32,7 +32,6 @@ void draw() {
     }
     changeFields();
   }
-  
 }
 
 void changeFields() {
@@ -42,50 +41,57 @@ void changeFields() {
       int current_change = parseInt(change[changeIndex]);
       //Out of screen
       if (field_val > 96 && field_val < 106) {
-        println(field_val);
         field_val -= 96;
-        if (field_val > 9){
-           field_val = 9; 
+        if (field_val > 9) {
+          field_val = 9;
         }
         char new_field = 0;
-        if (current_change == 0){
-           new_field = (char)(field_val+48); 
-           if (new_field > 57){
-              new_field = 57; 
-           }
+        if (current_change == 0) {
+          new_field = (char)(field_val+48); 
+          if (new_field > 57) {
+            new_field = 57;
+          }
+        } else {
+          new_field = (char)(field_val+96+current_change); 
+          if (new_field > 105) {
+            new_field = 105;
+          }
         }
-        else {
-           new_field = (char)(field_val+96+current_change); 
-           if (new_field > 105){
-              new_field = 105; 
-           }
-        }
-        println("write " +new_field);
         map[j][i] = new_field;
       }
       // Point into the screen
       else if (field_val > 48 && field_val < 58) {
-        println(field_val);
         field_val -= 48;
+        if (field_val > 9) {
+          field_val = 9;
+        }
         char new_field = 0;
-        if (current_change == 0){
-           new_field = (char)(field_val+96);
-           if (new_field > 105){
-              new_field = 105; 
-           }
+        if (current_change == 0) {
+          new_field = (char)(field_val+96);
+          if (new_field > 105) {
+            new_field = 105;
+          }
+        } else {
+          new_field = (char)(field_val+48-current_change); 
+          if (new_field > 57) {
+            new_field = 57;
+          }
         }
-        else {
-           new_field = (char)(field_val+48-current_change); 
-           if (new_field > 57){
-              new_field = 57; 
-           }
+        map[j][i] = new_field;
+      } else if (field_val == 48 || field_val == 96) {
+        char new_field = 48;
+        if (current_change > 0) {
+          new_field = (char)(48+current_change);
         }
-        println("write " +new_field);
+        else if (current_change < 0) {
+           new_field = (char)(96-current_change); 
+        }
         map[j][i] = new_field;
       }
     }
   }
 }
+
 
 void drawMag(int tile_x, int tile_y, int magnitude, boolean is_X) {
   int[][] spacings = {{20, 20}, {11, 11, 29, 29}, {9, 9, 20, 20, 31, 31}, {11, 11, 11, 29, 29, 11, 29, 29}, 
@@ -148,9 +154,13 @@ void drawMap() {
           drawMag(j, i, field_val, false);
         }
         // Point into the screen
-        else {
+        else if (field_val > 48 && field_val < 58) {
           field_val -= 48;
           drawMag(j, i, field_val, true);
+        } else {
+          stroke(228, 225, 169);
+          fill(228, 225, 169);
+          rect(j*40, i*40+75, 40, 40);
         }
       }
     }

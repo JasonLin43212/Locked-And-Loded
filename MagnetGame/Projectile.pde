@@ -37,7 +37,7 @@ public abstract class Projectile {
     return bf;
   }
   public void move() {
-    PVector B=new PVector(0,0,Bfield()*0.009);
+    PVector B=new PVector(0,0,Bfield()*0.02);
     if(Bfield()!=0){
       PVector a=v.cross(B)
         .mult(charge)
