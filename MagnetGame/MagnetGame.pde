@@ -22,8 +22,7 @@ void setup() {
 void draw() {
   background(60, 90, 120);
   drawMap();
-  player.display();
-  player.move();
+  
   test.display();
   test.move();
   teste.display();
@@ -31,6 +30,8 @@ void draw() {
   hudp.display();
   hude.display();
   testl.display();
+  player.display();
+  player.move();
   fill(255, 255, 255);
   textSize(18);
   text(": 10",730,727);
