@@ -1,11 +1,14 @@
 Player player = new Player(300, 300);
-PVector v=new PVector(2.0, 2.0);
-Proton test = new Proton(320, 300, v);
+Proton test = new Proton(320, 300);
+Electron teste=new Electron(320,300);
+Proton hudp= new Proton(710,720);
+Electron hude=new Electron(785,720);
+Loop testl=new Loop(400,300);
 char[][] map = new char[30][15];
 int timeInterval = 0;
 String[] change;
 int changeIndex = 0;
-
+int level=1;
 int intervalCountdown = 0;
 
 void setup() {
@@ -13,7 +16,7 @@ void setup() {
   // 30 by 15 board
   //75 pixels top and bottom for HUD
   size(1200, 750);
-  getLevel(1);
+  getLevel(level);
 }
 
 void draw() {
@@ -23,6 +26,22 @@ void draw() {
   player.move();
   test.display();
   test.move();
+  teste.display();
+  teste.move();
+  hudp.display();
+  hude.display();
+  testl.display();
+  fill(255, 255, 255);
+  textSize(18);
+  text(": 10",730,727);
+  text(": 10",795,727);
+  textSize(22);
+  text("Ammo",700,700);
+  text("Health",50,700);
+  textSize(32);
+  text("Magnetic Field Changes In: "+intervalCountdown, 700, 60); 
+  text("Level "+level, 50, 60);
+  
   intervalCountdown--; 
   if (intervalCountdown == 0) {
     intervalCountdown = timeInterval;
