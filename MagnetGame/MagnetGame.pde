@@ -3,10 +3,11 @@ import java.io.*;
 Player player = new Player(300, 300);
 //Proton test = new Proton(320, 300);
 //Electron teste=new Electron(320,300);
-Proton hudp= new Proton(710,720);
-Electron hude=new Electron(785,720);
+Proton hudp= new Proton(710, 720);
+Electron hude=new Electron(785, 720);
 //Loop testl=new Loop(400,300);
 ArrayList<Projectile> allProjectiles = new ArrayList<Projectile>();
+ArrayList<Entity> allEntities = new ArrayList<Entity>();
 char[][] map = new char[30][15];
 int timeInterval = 0;
 String[] change;
@@ -20,22 +21,25 @@ void setup() {
   //75 pixels top and bottom for HUD
   size(1200, 750);
   getLevel(level);
-  allProjectiles.add(new Electron(120,300));
-  allProjectiles.add(new Electron(220,300));
-  allProjectiles.add(new Proton(320,300));
+  allEntities.add(player);
 }
 
 void draw() {
   background(60, 90, 120);
   drawMap();
-  for (int i=0; i<allProjectiles.size(); i++){
+  for (int i=0; i<allProjectiles.size(); i++) {
     Projectile currentProjectile = allProjectiles.get(i);
     currentProjectile.display();
     currentProjectile.move();
-    if (currentProjectile.v.mag() < 0.9){
-       allProjectiles.remove(currentProjectile);
-       i -= 1;
+    if (currentProjectile.v.mag() < 0.9) {
+      allProjectiles.remove(currentProjectile);
+      i -= 1;
     }
+  }
+  for (int i=0; i<allEntities.size(); i++) {
+    Entity currentEntity = allEntities.get(i);
+    currentEntity.display();
+    currentEntity.move();
   }
   //test.display();
   //test.move();
@@ -44,19 +48,17 @@ void draw() {
   hudp.display();
   hude.display();
   //testl.display();
-  player.display();
-  player.move();
   fill(255, 255, 255);
   textSize(18);
-  text(": 10",730,727);
-  text(": 10",795,727);
+  text(": 10", 730, 727);
+  text(": 10", 795, 727);
   textSize(22);
-  text("Ammo",700,700);
-  text("Health",50,700);
+  text("Ammo", 700, 700);
+  text("Health", 50, 700);
   textSize(32);
   text("Magnetic Field Changes In: "+intervalCountdown, 700, 60); 
   text("Level "+level, 50, 60);
-  
+
   intervalCountdown--; 
   if (intervalCountdown == 0) {
     intervalCountdown = timeInterval;
@@ -116,9 +118,8 @@ void changeFields() {
         char new_field = 48;
         if (current_change > 0) {
           new_field = (char)(48+current_change);
-        }
-        else if (current_change < 0) {
-           new_field = (char)(96-current_change); 
+        } else if (current_change < 0) {
+          new_field = (char)(96-current_change);
         }
         map[j][i] = new_field;
       }
@@ -244,13 +245,12 @@ void keyPressed() {
 
 void keyReleased() {
   if (keyCode == 32) {
-    player.shoot(mouseX,mouseY);
-  }
-  else {
-  player.controlMovement(keyCode, 0);
+    player.shoot(mouseX, mouseY);
+  } else {
+    player.controlMovement(keyCode, 0);
   }
 }
 
-void mouseClicked(){
-  player.shoot(mouseX,mouseY); 
+void mouseClicked() {
+  player.shoot(mouseX, mouseY);
 }
