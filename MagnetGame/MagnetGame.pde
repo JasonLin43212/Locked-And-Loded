@@ -1,8 +1,8 @@
 import java.util.*;
 import java.io.*;
 Player player = new Player(300, 300);
-Proton hudp= new Proton(710, 720,new PVector(0,0));
-Electron hude=new Electron(785, 720);
+Proton hudp= new Proton(710, 720, new PVector(0,0));
+Electron hude=new Electron(785, 720, new PVector(0,0));
 ArrayList<Projectile> allProjectiles = new ArrayList<Projectile>();
 ArrayList<Entity> allEntities = new ArrayList<Entity>();
 char[][] map = new char[30][15];
@@ -11,6 +11,8 @@ String[] change;
 int changeIndex = 0;
 int level=1;
 int intervalCountdown = 0;
+int ammoP=10,ammoE=10;
+
 
 void setup() {
   // each tile is 40x40 pixel
@@ -31,7 +33,7 @@ void draw() {
     Projectile currentProjectile = allProjectiles.get(i);
     currentProjectile.display();
     currentProjectile.move();
-    if (currentProjectile.v.mag() < 0.9) {
+    if (currentProjectile.v.mag() < 0.5) {
       allProjectiles.remove(currentProjectile);
       i -= 1;
     }
@@ -45,8 +47,8 @@ void draw() {
   hude.display();
   fill(255, 255, 255);
   textSize(18);
-  text(": 10", 730, 727);
-  text(": 10", 795, 727);
+  text(": "+ammoP, 730, 727);
+  text(": "+ammoE, 795, 727);
   textSize(22);
   text("Ammo", 700, 700);
   text("Health", 50, 700);
@@ -241,7 +243,11 @@ void keyPressed() {
 void keyReleased() {
   if (keyCode == 32) {
     player.shoot(mouseX, mouseY);
-  } else {
+  }
+  else if(keyCode == 17){
+    player.change();
+  } 
+  else {
     player.controlMovement(keyCode, 0);
   }
 }
