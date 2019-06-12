@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 Player player = new Player(300, 300);
-Proton hudp= new Proton(710, 720,new PVector(0,0));
+Proton hudp= new Proton(710, 720, new PVector(0, 0));
 Electron hude=new Electron(785, 720);
 ArrayList<Projectile> allProjectiles = new ArrayList<Projectile>();
 ArrayList<Entity> allEntities = new ArrayList<Entity>();
@@ -19,9 +19,6 @@ void setup() {
   size(1200, 750);
   getLevel(level);
   allEntities.add(player);
-  //allProjectiles.add(new Proton(330,330));
-  //allProjectiles.add(new Electron(430,330));
-  //allProjectiles.add(new Loop(530,330));
 }
 
 void draw() {
@@ -31,7 +28,7 @@ void draw() {
     Projectile currentProjectile = allProjectiles.get(i);
     currentProjectile.display();
     currentProjectile.move();
-    if (currentProjectile.v.mag() < 0.9) {
+    if (currentProjectile.v.mag() < 0.01) {
       allProjectiles.remove(currentProjectile);
       i -= 1;
     }
@@ -70,54 +67,37 @@ void changeFields() {
     for (int j=0; j<30; j++) {
       int field_val = (int)map[j][i];
       int current_change = parseInt(change[changeIndex]);
-      //Out of screen
+      // Out of screen (Negative)
       if (field_val > 96 && field_val < 106) {
         field_val -= 96;
-        if (field_val > 9) {
-          field_val = 9;
-        }
-        char new_field = 0;
-        if (current_change == 0) {
-          new_field = (char)(field_val+48); 
-          if (new_field > 57) {
-            new_field = 57;
-          }
-        } else {
-          new_field = (char)(field_val+96+current_change); 
-          if (new_field > 105) {
-            new_field = 105;
-          }
-        }
-        map[j][i] = new_field;
+        field_val = -field_val;
       }
-      // Point into the screen
+      // Into the screen (positive)
       else if (field_val > 48 && field_val < 58) {
         field_val -= 48;
-        if (field_val > 9) {
-          field_val = 9;
-        }
-        char new_field = 0;
-        if (current_change == 0) {
-          new_field = (char)(field_val+96);
-          if (new_field > 105) {
-            new_field = 105;
-          }
-        } else {
-          new_field = (char)(field_val+48-current_change); 
-          if (new_field > 57) {
-            new_field = 57;
-          }
-        }
-        map[j][i] = new_field;
-      } else if (field_val == 48 || field_val == 96) {
-        char new_field = 48;
-        if (current_change > 0) {
-          new_field = (char)(48+current_change);
-        } else if (current_change < 0) {
-          new_field = (char)(96-current_change);
-        }
-        map[j][i] = new_field;
+      } 
+      // Zero
+      else if (field_val == 48 || field_val == 96) {
+        field_val = 0;
       }
+      else {
+         continue; 
+      }
+      int new_field = field_val + current_change;
+      if (new_field > 9) {
+        new_field = 9;
+      }
+      if (new_field < -9) {
+        new_field = -9;
+      }
+      if (new_field >= 0) {
+        new_field += 48;
+      } else {
+        new_field = -new_field;
+        new_field += 96;
+      }
+      print(","+new_field);
+      map[j][i] = (char)new_field;
     }
   }
 }
@@ -139,11 +119,14 @@ void drawMag(int tile_x, int tile_y, int magnitude, boolean is_X) {
     int x_center = tile_x*40 + spacings[magnitude-1][k*2];
     int y_center = (tile_y*40+75)+ spacings[magnitude-1][k*2+1];
     strokeWeight(2);
+    //Into the Screen (Positive)
     if (is_X) {
       stroke(255, 0, 0);
       line(x_center-3, y_center-3, x_center+3, y_center+3);
       line(x_center-3, y_center+3, x_center+3, y_center-3);
-    } else {
+    }
+    //Out of the screen (Negative)
+    else {
       stroke(34, 139, 34);
       strokeWeight(1);
       circle(x_center, y_center, 8);
@@ -178,12 +161,12 @@ void drawMap() {
       //Draw magnetic fields
       else {
         int field_val = (int)map[j][i];
-        //Out of screen
+        //Out of screen (Negative)
         if (field_val > 96 && field_val < 106) {
           field_val -= 96;
           drawMag(j, i, field_val, false);
         }
-        // Point into the screen
+        // Point into the screen (Positive)
         else if (field_val > 48 && field_val < 58) {
           field_val -= 48;
           drawMag(j, i, field_val, true);
