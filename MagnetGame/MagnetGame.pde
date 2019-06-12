@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import java.util.*;
 import java.io.*;
 Player player = new Player(300, 300);
@@ -44,11 +43,10 @@ void draw() {
   hude.display();
   fill(255, 255, 255);
   textSize(18);
-  text(": 10", 730, 727);
-  text(": 10", 795, 727);
-  textSize(22);
   text(": "+ammoP, 730, 727);
   text(": "+ammoE, 795, 727);
+  textSize(22);
+  
   text("Ammo", 700, 700);
   text("Health", 50, 700);
   textSize(32);
