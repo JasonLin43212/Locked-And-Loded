@@ -46,19 +46,17 @@ public abstract class Projectile {
       v.add(a);
     }
     //println(v.mag());
-    if ((x+v.x)/40<map.length){
-      x+=v.x;
-      if(map[(int)((x-10)/40)][(int)((y-75)/40)]=='X'||map[(int)((x+10)/40)][(int)((y-75)/40)]=='X'){
-        v.x= -v.x;
-        v.mult(0.53);
-      }
+    x+=v.x;
+    if(map[(int)((x-5)/40)][(int)((y-75)/40)]=='X'||map[(int)((x+15)/40)][(int)((y-75)/40)]=='X'){
+      x-=v.x;
+      v.x= -v.x;
+      v.mult(0.53);
     }
-    if((y+v.y-70)/40<map[0].length){
-      y+=v.y;
-      if(map[(int)(x/40)][(int)((y-65)/40)]=='X'||map[(int)(x/40)][(int)((y-85)/40)]=='X'){
-        v.y= -v.y;
-        v.mult(0.53);
-      }
+    y+=v.y;
+    if(map[(int)(x/40)][(int)((y-70)/40)]=='X'||map[(int)(x/40)][(int)((y-80)/40)]=='X'){
+      y-=v.y;
+      v.y= -v.y;
+      v.mult(0.53);
     }
   }
 }
