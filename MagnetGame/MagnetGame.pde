@@ -8,7 +8,7 @@ ArrayList<Entity> allEntities = new ArrayList<Entity>();
 char[][] map = new char[30][15];
 int timeInterval = 0;
 String[] change;
-int changeIndex = 0;
+int changeIndex = -1;
 int level=1;
 int intervalCountdown = 0;
 
@@ -90,13 +90,15 @@ void changeFields() {
       if (new_field < -9) {
         new_field = -9;
       }
+      if (current_change == 0){
+        new_field = -new_field; 
+      }
       if (new_field >= 0) {
         new_field += 48;
       } else {
         new_field = -new_field;
         new_field += 96;
       }
-      print(","+new_field);
       map[j][i] = (char)new_field;
     }
   }
