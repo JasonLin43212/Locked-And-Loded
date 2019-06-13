@@ -5,19 +5,24 @@ public class Enemy extends Entity {
   float nextX, nextY;
 
   public Enemy(float x, float y, String projectiles, color enemyColor) {
-    super(x, y, 2.5, -1, enemyColor, 5, 200);
+    super(x, y, 1.5, -1, enemyColor, 5, 200);
     this.projectiles = projectiles;
     this.movementCounter = 1;
-    this.shootingCounter = 300;
+    this.shootingCounter = 30;
   }
 
   public void shoot(float x, float y) {
-    //use global difficuty to determine accuracy
-    print("emeny shoot");
+    shootingCounter--;
+    if (shootingCounter == 0) {
+      PVector bulletDirection = new PVector(x - this.x, y - this.y);
+      allProjectiles.add(new Proton(this.x, this.y, bulletDirection.normalize().mult(3)));
+      shootingCounter = 30;
+    }
   }
 
   public void move() {
     super.move();
+    //shoot(x+random(10)-5, y+random(10)-5);
     movementCounter--;
 
     if (movementCounter == 0) {
@@ -31,11 +36,11 @@ public class Enemy extends Entity {
         }
         if (map[(int)(nextX/40)][(int)((nextY-75)/40)] != 'X' && map[(int)(nextX/40)][(int)((nextY-75)/40)] != 'O') {
           hasChosen = true; 
-          movementCounter = 50;
+          movementCounter = (int) (random(40) + 30);
         }
       }
     }
-    if (abs(x-nextX) > 10){
+    if (abs(x-nextX) > 10) {
       if (x < nextX) {
         right = 1;
         left = 0;
@@ -45,7 +50,7 @@ public class Enemy extends Entity {
         left = 1;
       }
     }
-    if (abs(y-nextY) > 10){
+    if (abs(y-nextY) > 10) {
       if (y < nextY) {
         up = 0;
         down = 1;
@@ -54,8 +59,7 @@ public class Enemy extends Entity {
         up = 1;
         down = 0;
       }
-    }
-    else {
+    } else {
       up = 0;
       down = 0;
       left = 0;
