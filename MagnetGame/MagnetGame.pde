@@ -13,6 +13,7 @@ int changeIndex = -1;
 int level=1;
 int intervalCountdown = 0;
 int ammoE=100, ammoP=100;
+//add it to the map
 
 void setup() {
   // each tile is 40x40 pixel
@@ -41,7 +42,12 @@ void draw() {
     currentEntity.move();
     for (int j=0; j<allProjectiles.size(); j++){
        Projectile curProj = allProjectiles.get(j);
-       if (dist(curProj.x,curProj.y,currentEntity.x,currentEntity.y) <= 20 && curProj.parentId != currentEntity.id){
+       float killDist = 17.5;
+       if (curProj.charge == -1){
+          killDist = 15; 
+       }
+       if (dist(curProj.x,curProj.y,currentEntity.x,currentEntity.y) <= killDist &&
+       ((curProj.parentId >= 0 && currentEntity.id == -1) || (curProj.parentId == -1 && currentEntity.id != -1))){
           allEntities.remove(currentEntity);
           allProjectiles.remove(curProj);
           i--;
@@ -202,11 +208,14 @@ void getLevel(int level) {
     for (int j=0; j<30; j++) {
       char cur_char = lines[i].charAt(j);
       if (cur_char == 'P') {
-        player = new Player(j*40, i*40+75,nextEntityId);
-        nextEntityId++;
+        player = new Player(j*40, i*40+75);
         map[j][i] = ' ';
       } else if (cur_char == 'z') {
         allEntities.add(new Enemy(j*40, i*40+75,"p",color(50,40,30),nextEntityId));
+        nextEntityId++;
+        map[j][i] = ' ';
+      }else if (cur_char == 'y') {
+        allEntities.add(new Enemy(j*40, i*40+75,"e",color(50,40,30),nextEntityId));
         nextEntityId++;
         map[j][i] = ' ';
       }

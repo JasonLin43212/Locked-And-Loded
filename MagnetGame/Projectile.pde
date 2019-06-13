@@ -48,7 +48,7 @@ public abstract class Projectile {
     }
     //println(v.mag());
     x+=v.x;
-    if(map[(int)((x-5)/40)][(int)((y-75)/40)]=='X'||map[(int)((x+15)/40)][(int)((y-75)/40)]=='X'){
+    if(map[(int)((x-5)/40)][(int)((y-75)/40)]=='X'||map[(int)((x+5)/40)][(int)((y-75)/40)]=='X'){
       x-=v.x;
       v.x= -v.x;
       v.mult(0.53);

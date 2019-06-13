@@ -14,8 +14,16 @@ public class Enemy extends Entity {
   public void shoot(float x, float y) {
     shootingCounter--;
     if (shootingCounter == 0) {
-      PVector bulletDirection = new PVector(x - this.x, y - this.y);
-      allProjectiles.add(new Proton(this.x, this.y, bulletDirection.normalize().mult(3),id));
+      char curProj = projectiles.charAt((int)random(projectiles.length()));
+      if (curProj == 'p') {
+        PVector bulletDirection = new PVector(x - this.x, y - this.y);
+        allProjectiles.add(new Proton(this.x+bulletDirection.normalize().x*16, this.y+bulletDirection.normalize().y*16, 
+          bulletDirection.normalize().mult(3), id));
+      } else if (curProj == 'e') {
+        PVector bulletDirection = new PVector(x - this.x, y - this.y);
+        allProjectiles.add(new Electron(this.x+bulletDirection.normalize().x*11, this.y+bulletDirection.normalize().y*11,
+        bulletDirection.normalize().mult(3.5), id));
+      }
       shootingCounter = 100;
     }
   }
