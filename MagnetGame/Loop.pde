@@ -1,6 +1,6 @@
 public class Loop extends Projectile {
-  public Loop(float xcor, float ycor) {
-    super(xcor, ycor, new PVector(2.0, 2.0), false, 1, 0);
+  public Loop(float xcor, float ycor,int parentId) {
+    super(xcor, ycor, new PVector(2.0, 2.0), false, 1, 0,parentId);
   }
   public void display() {
     stroke(1);

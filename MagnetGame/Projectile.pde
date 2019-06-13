@@ -2,16 +2,17 @@ public abstract class Projectile {
   float x, y, mass;
   PVector v;
   boolean isParticle;
-  int charge, numBounces;
+  int charge, numBounces, parentId;
 
   public Projectile (float xcor, float ycor, PVector vel, 
-    boolean isP, int c, int nb ) {
+    boolean isP, int c, int nb, int parentID ) {
     x=xcor;
     y=ycor;
     v=vel;
     isParticle=isP;
     charge=c;
     numBounces=nb;
+    parentId = parentID;
     if (charge>0){
       mass=2;
     }

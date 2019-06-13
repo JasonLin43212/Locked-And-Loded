@@ -4,8 +4,8 @@ public class Enemy extends Entity {
   int movementCounter, shootingCounter;
   float nextX, nextY;
 
-  public Enemy(float x, float y, String projectiles, color enemyColor) {
-    super(x, y, 1.5, -1, enemyColor, 5, 200);
+  public Enemy(float x, float y, String projectiles, color enemyColor, int id) {
+    super(x, y, 1.5, id, enemyColor, 5, 200);
     this.projectiles = projectiles;
     this.movementCounter = 1;
     this.shootingCounter = 30;
@@ -15,14 +15,14 @@ public class Enemy extends Entity {
     shootingCounter--;
     if (shootingCounter == 0) {
       PVector bulletDirection = new PVector(x - this.x, y - this.y);
-      allProjectiles.add(new Proton(this.x, this.y, bulletDirection.normalize().mult(3)));
-      shootingCounter = 30;
+      allProjectiles.add(new Proton(this.x, this.y, bulletDirection.normalize().mult(3),id));
+      shootingCounter = 100;
     }
   }
 
   public void move() {
     super.move();
-    //shoot(x+random(10)-5, y+random(10)-5);
+    shoot(x+random(10)-5, y+random(10)-5);
     movementCounter--;
 
     if (movementCounter == 0) {

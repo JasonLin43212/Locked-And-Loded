@@ -1,8 +1,9 @@
 import java.util.*;
 import java.io.*;
 Player player;
-Proton hudp= new Proton(710, 720, new PVector(0, 0));
-Electron hude=new Electron(785, 720, new PVector(0, 0));
+Proton hudp= new Proton(710, 720, new PVector(0, 0),-1);
+Electron hude=new Electron(785, 720, new PVector(0, 0),-1);
+int nextEntityId = 0;
 ArrayList<Projectile> allProjectiles = new ArrayList<Projectile>();
 ArrayList<Entity> allEntities = new ArrayList<Entity>();
 char[][] map = new char[30][15];
@@ -38,6 +39,15 @@ void draw() {
     Entity currentEntity = allEntities.get(i);
     currentEntity.display();
     currentEntity.move();
+    for (int j=0; j<allProjectiles.size(); j++){
+       Projectile curProj = allProjectiles.get(j);
+       if (dist(curProj.x,curProj.y,currentEntity.x,currentEntity.y) <= 20 && curProj.parentId != currentEntity.id){
+          allEntities.remove(currentEntity);
+          allProjectiles.remove(curProj);
+          i--;
+          break;
+       }
+    }
   }
   hudp.display();
   hude.display();
@@ -192,10 +202,12 @@ void getLevel(int level) {
     for (int j=0; j<30; j++) {
       char cur_char = lines[i].charAt(j);
       if (cur_char == 'P') {
-        player = new Player(j*40, i*40+75);
+        player = new Player(j*40, i*40+75,nextEntityId);
+        nextEntityId++;
         map[j][i] = ' ';
       } else if (cur_char == 'z') {
-        allEntities.add(new Enemy(j*40, i*40+75,"p",color(50,40,30)));
+        allEntities.add(new Enemy(j*40, i*40+75,"p",color(50,40,30),nextEntityId));
+        nextEntityId++;
         map[j][i] = ' ';
       }
       else {
