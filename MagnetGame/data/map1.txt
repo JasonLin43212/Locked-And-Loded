@@ -1,7 +1,7 @@
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 X                            X
 X                            X
-X                            X
+X z                          X
 X                            X
 X                            X
 X                            X
@@ -11,7 +11,7 @@ X        11111111            X
 X        11111111            X
 X        11111111            X
 X                            X
-X                            X
+X    P                       X
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 300
 -5,0

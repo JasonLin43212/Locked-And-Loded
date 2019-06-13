@@ -1,8 +1,8 @@
 import java.util.*;
 import java.io.*;
-Player player = new Player(300, 300);
+Player player;
 Proton hudp= new Proton(710, 720, new PVector(0, 0));
-Electron hude=new Electron(785, 720, new PVector(0,0));
+Electron hude=new Electron(785, 720, new PVector(0, 0));
 ArrayList<Projectile> allProjectiles = new ArrayList<Projectile>();
 ArrayList<Entity> allEntities = new ArrayList<Entity>();
 char[][] map = new char[30][15];
@@ -11,7 +11,7 @@ String[] change;
 int changeIndex = -1;
 int level=1;
 int intervalCountdown = 0;
-int ammoE=10, ammoP=10;
+int ammoE=100, ammoP=100;
 
 void setup() {
   // each tile is 40x40 pixel
@@ -29,7 +29,7 @@ void draw() {
     Projectile currentProjectile = allProjectiles.get(i);
     currentProjectile.display();
     currentProjectile.move();
-    if (currentProjectile.v.mag() < 0.01) {
+    if (currentProjectile.v.mag() < 0.5) {
       allProjectiles.remove(currentProjectile);
       i -= 1;
     }
@@ -46,7 +46,7 @@ void draw() {
   text(": "+ammoP, 730, 727);
   text(": "+ammoE, 795, 727);
   textSize(22);
-  
+
   text("Ammo", 700, 700);
   text("Health", 50, 700);
   textSize(32);
@@ -81,9 +81,8 @@ void changeFields() {
       // Zero
       else if (field_val == 48 || field_val == 96) {
         field_val = 0;
-      }
-      else {
-         continue; 
+      } else {
+        continue;
       }
       int new_field = field_val + current_change;
       if (new_field > 9) {
@@ -92,8 +91,8 @@ void changeFields() {
       if (new_field < -9) {
         new_field = -9;
       }
-      if (current_change == 0){
-        new_field = -new_field; 
+      if (current_change == 0) {
+        new_field = -new_field;
       }
       if (new_field >= 0) {
         new_field += 48;
@@ -191,7 +190,17 @@ void getLevel(int level) {
   String[] lines = loadStrings("map" + str(level) + ".txt");
   for (int i=0; i<15; i++) {
     for (int j=0; j<30; j++) {
-      map[j][i] = lines[i].charAt(j);
+      char cur_char = lines[i].charAt(j);
+      if (cur_char == 'P') {
+        player = new Player(j*40, i*40+75);
+        map[j][i] = ' ';
+      } else if (cur_char == 'z') {
+        allEntities.add(new Enemy(j*40, i*40+75,"p",color(50,40,30)));
+        map[j][i] = ' ';
+      }
+      else {
+        map[j][i] = cur_char;
+      }
     }
   }
   timeInterval = Integer.parseInt(lines[15].split("\n", 0)[0]);
@@ -228,8 +237,7 @@ void keyPressed() {
 void keyReleased() {
   if (keyCode == 32) {
     player.shoot(mouseX, mouseY);
-  } 
-  else if (keyCode==17){
+  } else if (keyCode==17) {
     player.change();
   } else {
     player.controlMovement(keyCode, 0);
