@@ -2,16 +2,17 @@ public abstract class Projectile {
   float x, y, mass;
   PVector v;
   boolean isParticle;
-  int charge, numBounces;
+  int charge, numBounces, parentId;
 
   public Projectile (float xcor, float ycor, PVector vel, 
-    boolean isP, int c, int nb ) {
+    boolean isP, int c, int nb, int parentID ) {
     x=xcor;
     y=ycor;
     v=vel;
     isParticle=isP;
     charge=c;
     numBounces=nb;
+    parentId = parentID;
     if (charge>0){
       mass=2;
     }
@@ -38,7 +39,7 @@ public abstract class Projectile {
   }
   public abstract void display();
   public void move() {
-    PVector B=new PVector(0,0,Bfield()*0.02);
+    PVector B=new PVector(0,0,Bfield()*0.005);
     if(Bfield()!=0){
       PVector a=v.cross(B)
         .mult(charge)
@@ -47,7 +48,7 @@ public abstract class Projectile {
     }
     //println(v.mag());
     x+=v.x;
-    if(map[(int)((x-5)/40)][(int)((y-75)/40)]=='X'||map[(int)((x+15)/40)][(int)((y-75)/40)]=='X'){
+    if(map[(int)((x-5)/40)][(int)((y-75)/40)]=='X'||map[(int)((x+5)/40)][(int)((y-75)/40)]=='X'){
       x-=v.x;
       v.x= -v.x;
       v.mult(0.53);

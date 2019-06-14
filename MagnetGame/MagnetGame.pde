@@ -1,8 +1,9 @@
 import java.util.*;
 import java.io.*;
-Player player = new Player(300, 300);
-Proton hudp= new Proton(710, 720, new PVector(0, 0));
-Electron hude=new Electron(785, 720, new PVector(0,0));
+Player player;
+Proton hudp= new Proton(710, 720, new PVector(0, 0),-1);
+Electron hude=new Electron(785, 720, new PVector(0, 0),-1);
+int nextEntityId = 0;
 ArrayList<Projectile> allProjectiles = new ArrayList<Projectile>();
 ArrayList<Entity> allEntities = new ArrayList<Entity>();
 PImage go;
@@ -12,7 +13,7 @@ String[] change;
 int changeIndex = -1;
 int level=1;
 int intervalCountdown = 0;
-int ammoE=10, ammoP=10;
+int ammoE=100, ammoP=100;
 int mode=0;
 int bullet=1;
 boolean wmouse = false;
@@ -28,11 +29,12 @@ void setup() {
 }
 public void reset(int level) {
   this.level=level;
+  allEntities = new ArrayList<Entity>();
   getLevel(level);
   allEntities.add(player);
   allProjectiles = new ArrayList<Projectile>();
-  ammoE=10;
-  ammoP=10;
+  ammoE=100;
+  ammoP=100;
   bullet=1;
   wmouse = false;
 }
@@ -131,9 +133,27 @@ void draw() {
       currentEntity.display();
       currentEntity.move();
     }
-    if (ammoP==0 && ammoE==0){
-      allEntities.remove(player);
+    if ((ammoP==0 && ammoE==0)||!allEntities.contains(player)){
       mode=2;
+    }
+    for (int i=0; i<allEntities.size(); i++) {
+      Entity currentEntity = allEntities.get(i);
+      currentEntity.display();
+      currentEntity.move();
+      for (int j=0; j<allProjectiles.size(); j++){
+        Projectile curProj = allProjectiles.get(j);
+        float killDist = 17.5;
+        if (curProj.charge == -1){
+            killDist = 15; 
+        }
+        if (dist(curProj.x,curProj.y,currentEntity.x,currentEntity.y) <= killDist &&
+        ((curProj.parentId >= 0 && currentEntity.id == -1) || (curProj.parentId == -1 && currentEntity.id != -1))){
+            allEntities.remove(currentEntity);
+            allProjectiles.remove(curProj);
+            i--;
+            break;
+        }
+      }
     }
     hudp.display();
     hude.display();
@@ -146,11 +166,11 @@ void draw() {
     text("Ammo", 700, 700);
     text("In Use:",1000,725);
     if(bullet>0){
-      Proton upr=new Proton(1090, 718, new PVector(0, 0));
+      Proton upr=new Proton(1090, 718, new PVector(0, 0),-1);
       upr.display();
     }
     else{
-      Electron uel=new Electron(1090, 718, new PVector(0, 0));
+      Electron uel=new Electron(1090, 718, new PVector(0, 0),-1);
       uel.display();
     }
     fill(255,255,255);
@@ -199,9 +219,8 @@ void changeFields() {
       // Zero
       else if (field_val == 48 || field_val == 96) {
         field_val = 0;
-      }
-      else {
-         continue; 
+      } else {
+        continue;
       }
       int new_field = field_val + current_change;
       if (new_field > 9) {
@@ -210,8 +229,8 @@ void changeFields() {
       if (new_field < -9) {
         new_field = -9;
       }
-      if (current_change == 0){
-        new_field = -new_field; 
+      if (current_change == 0) {
+        new_field = -new_field;
       }
       if (new_field >= 0) {
         new_field += 48;
@@ -309,7 +328,22 @@ void getLevel(int level) {
   String[] lines = loadStrings("map" + str(level) + ".txt");
   for (int i=0; i<15; i++) {
     for (int j=0; j<30; j++) {
-      map[j][i] = lines[i].charAt(j);
+      char cur_char = lines[i].charAt(j);
+      if (cur_char == 'P') {
+        player = new Player(j*40, i*40+75);
+        map[j][i] = ' ';
+      } else if (cur_char == 'z') {
+        allEntities.add(new Enemy(j*40, i*40+75,"p",color(50,40,30),nextEntityId));
+        nextEntityId++;
+        map[j][i] = ' ';
+      }else if (cur_char == 'y') {
+        allEntities.add(new Enemy(j*40, i*40+75,"e",color(50,40,30),nextEntityId));
+        nextEntityId++;
+        map[j][i] = ' ';
+      }
+      else {
+        map[j][i] = cur_char;
+      }
     }
   }
   timeInterval = Integer.parseInt(lines[15].split("\n", 0)[0]);

@@ -1,7 +1,7 @@
 public class Electron extends Projectile {
 
-  public Electron(float xcor, float ycor,  PVector v) {
-    super(xcor, ycor, v, true, -1, 0);
+  public Electron(float xcor, float ycor,  PVector v, int parentId) {
+    super(xcor, ycor, v, true, -1, 0,parentId);
   }
   public void display() {
     fill(155, 255, 0);
