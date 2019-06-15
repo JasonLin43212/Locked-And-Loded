@@ -13,6 +13,7 @@ public class Player extends Entity {
         ammoP--;
         allProjectiles.add(new Proton(this.x+bulletDirection.normalize().x*16, this.y+bulletDirection.normalize().y*16, 
           bulletDirection.normalize().mult(3), id));
+          
       }
     } else {
       if (ammoE>0) {

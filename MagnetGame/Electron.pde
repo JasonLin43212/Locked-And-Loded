@@ -4,7 +4,13 @@ public class Electron extends Projectile {
     super(xcor, ycor, v, true, -1, 0,parentId);
   }
   public void display() {
-    fill(155, 255, 0);
+    
+    if(super.parentId>=0){
+      fill(255,127,80);
+    }
+    else{
+      fill(155, 255, 0);
+    }
     stroke(1);
     ellipse(super.x, super.y, 10, 10);
     strokeWeight(3);

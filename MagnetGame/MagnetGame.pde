@@ -17,6 +17,7 @@ int ammoE=100, ammoP=100;
 int mode=0;
 int bullet=1;
 boolean wmouse = false;
+float angle;
 PFont arcade;
 
 void setup() {
@@ -28,6 +29,7 @@ void setup() {
   getLevel(level);
   allEntities.add(player);
   go=loadImage("GOver.png");
+  mouseLoc=new PVector(mouseX,mouseY);
 }
 public void reset(int level) {
   this.level=level;
@@ -60,6 +62,7 @@ void draw() {
     text("Instructions",505,512);
   }
   if(mode==3){
+    //println(mouseLoc.normalize());
     background(238, 238,238);
     PImage arrows,space,shift,wasd,mouse;
     wasd=loadImage("wasd.png");
@@ -131,7 +134,6 @@ void draw() {
         i -= 1;
       }
     }
-    
     if ((ammoP==0 && ammoE==0)||!allEntities.contains(player)){
       mode=2;
     }
@@ -164,7 +166,6 @@ void draw() {
     text(":"+ammoP, 730, 727);
     text(":"+ammoE, 795, 727);
     textSize(12);
-    
     text("Ammo", 700, 700);
     text("In Use:",1000,725);
     if(bullet>0){
@@ -421,7 +422,7 @@ void mouseClicked() {
     }
     if(mode==2){
       if(mouseX>=490 && mouseX<=730 && mouseY>=360 && mouseY<=440){
-        reset(level);
+        reset(1);
         mode=1;
       }
     }
@@ -447,7 +448,7 @@ void mouseClicked() {
         mode=1;
       }
       else if(mouseX>=490 && mouseX<=730 && mouseY>=460 && mouseY<=540){
-        reset(level);
+        reset(1);
         mode=0;
       }
   }
