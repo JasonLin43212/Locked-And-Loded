@@ -43,21 +43,30 @@ public void reset(int level) {
 void draw() {
   textFont(arcade);
   if(mode==0){
-    background(178, 255, 178);
+    PImage logo=loadImage("logo.png");
+    background(54, 151, 160);
     stroke(0, 0, 0);
     fill(255, 255, 255);
     rect(490, 360, 240, 80);
     textSize(22);
     fill(0, 0, 0);
-
+    logo.resize(700, 60);
+    image(logo, 250, 200);
     text("Start Game",508,412);
     stroke(0,0,0);
     fill(255,255,255);
     rect(490, 460, 240, 80);
+    textSize(22);
+    fill(0, 0, 0);
+
+    text("Controls", 522, 512);
+    stroke(0,0,0);
+    fill(255,255,255);
+    rect(490, 560, 240, 80);
     textSize(18);
     fill(0, 0, 0);
 
-    text("Instructions", 505, 512);
+    text("Instructions", 508, 612);
   }
   if (mode==3) {
     background(238, 238, 238);
@@ -192,8 +201,9 @@ void draw() {
       Electron uel=new Electron(1090, 718, new PVector(0, 0), -1);
       uel.display();
     }
+    textSize(20);
     fill(255, 255, 255);
-    text("Health", 50, 700);
+    text("Locked & Loded"+"\u2122", 50, 700);
     textSize(16);
     text("Magnetic Field Changes In: "+intervalCountdown, 700, 60); 
     text("Level "+level, 50, 60);
