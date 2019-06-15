@@ -1,6 +1,6 @@
 public abstract class Entity {
 
-  float x, y, direction, speed;
+  float x, y,direction, speed;
   int id, up, right, down, left, maxProjectiles, currentProjectiles, cooldown, maxCooldown;
   color entityColor;
 

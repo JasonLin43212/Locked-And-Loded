@@ -1,17 +1,19 @@
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-X                            X
-X              y             X
-X                            X
-X                            X
-X3333333333333333333333333333X
-X                            X
-X                            X
-X                            X
-X                            X
-X                            X
-X             P              X
-X                            X
-X                            X
+X            X               X
+X            X  P            X
+X            XOOOOOOOOOOOOOOOX
+X            X5e5e5e5e5e5e5e5X
+X            Xe5e5e5e5e5e5e5eX
+X            X5e5e5e5e5e5e5e5X
+X            Xe5e5e5e5e5e5e5eX
+X            X5e5e5e5e5e5e5e5X
+X            Xe5e5e5e5e5e5e5eX
+X            XOOOOOOOOOOOOOOOX
+X            X          y    X
+X            X               X
+X            X               X
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-300
+1000
 0
+0
+30

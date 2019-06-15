@@ -1,0 +1,19 @@
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X     O                O     X
+X     O                O   z X
+X   y O                O     X
+X     O                O     X
+XOOOOOO                OOOOOOX
+X           66666            X
+X           66666            X
+X           66666            X
+XOOOOOOOOOOXOOOOOXOOOOOOOOOOOX
+X     O    X     X     O     X
+X   z O    X  P  X     Oy    X
+X     O    X     X     O     X
+X     O    X     X     O     X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+300
+0
+50
+50
