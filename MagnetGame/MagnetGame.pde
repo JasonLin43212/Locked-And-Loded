@@ -61,13 +61,17 @@ void draw() {
   }
   if (mode==3) {
     background(238, 238, 238);
-    PImage arrows, space, shift, wasd, mouse;
+    PImage arrows, space, shift, wasd, mouse,p;
     wasd=loadImage("wasd.png");
     shift=loadImage("shift.png");
+    p=loadImage("P.png");
     textSize(11);
     fill(0, 0, 0);
     wasd.resize((int)(wasd.width*1.5), (int)(wasd.height*1.5));
     image(wasd, 100, 230);
+    p.resize((int)(p.width*1.5), (int)(p.height*1.5));
+    image(p, 530, 200);
+    text("Press P to pause/unpause",480,310);
     text("Use the WASD keys to move the player", 120, 430);
     shift.resize((int)(shift.width*1.5), (int)(shift.height*1.5));
     image(shift,120,450);
