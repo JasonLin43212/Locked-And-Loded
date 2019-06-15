@@ -183,9 +183,9 @@ void draw() {
       uel.display();
     }
     fill(255, 255, 255);
-    text("Health", 50, 700);
+    text("Locked and Loded", 50, 700);
     textSize(16);
-    text("Magnetic Field Changes In: "+intervalCountdown, 700, 60); 
+    text("Magnetic Field Changes In: "+ ((intervalCountdown/60)+1) + " sec", 650, 60); 
     text("Level "+level, 50, 60);
 
     intervalCountdown--; 
