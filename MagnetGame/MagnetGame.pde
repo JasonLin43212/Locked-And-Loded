@@ -17,11 +17,13 @@ int ammoE=100, ammoP=100;
 int mode=0;
 int bullet=1;
 boolean wmouse = false;
+PFont arcade;
 
 void setup() {
   // each tile is 40x40 pixel
   // 30 by 15 board
   //75 pixels top and bottom for HUD
+  arcade=createFont("ARCADE_N.TTF",10);
   size(1200, 750);
   getLevel(level);
   allEntities.add(player);
@@ -39,19 +41,20 @@ public void reset(int level) {
   wmouse = false;
 }
 void draw() {
+  textFont(arcade);
   if(mode==0){
     background(178, 255, 178);
     stroke(0,0,0);
     fill(255,255,255);
     rect(490, 360, 240, 80);
-    textSize(40);
+    textSize(22);
     fill(0, 0, 0);
 
-    text("Start Game",505,412);
+    text("Start Game",508,412);
     stroke(0,0,0);
     fill(255,255,255);
     rect(490, 460, 240, 80);
-    textSize(37);
+    textSize(18);
     fill(0, 0, 0);
 
     text("Instructions",505,512);
@@ -61,7 +64,7 @@ void draw() {
     PImage arrows,space,shift,wasd,mouse;
     wasd=loadImage("wasd.png");
     shift=loadImage("shift.png");
-    textSize(22);
+    textSize(11);
     fill(0, 0, 0);
     wasd.resize((int)(wasd.width*1.5), (int)(wasd.height*1.5));
     image(wasd,100,230);
@@ -72,14 +75,14 @@ void draw() {
     if(!wmouse){
       fill(135,206,250);
       rect(100,100,180,60);
-      textSize(24);
+      textSize(14);
       fill(0, 0, 0);
       text("Keyboard",135,140);
       fill(255,255,255);
       rect(300,100,210,60);
-      textSize(22);
+      textSize(11);
       fill(0, 0, 0);
-      text("Keyboard+Mouse",310,138);
+      text("Keyboard and Mouse",308,138);
 
       arrows=loadImage("arrows.png");
       arrows.resize(281, 209);
@@ -93,14 +96,14 @@ void draw() {
     else{
       fill(255,255,255);
       rect(100,100,180,60);
-      textSize(24);
+      textSize(14);
       fill(0, 0, 0);
       text("Keyboard",135,140);
       fill(135,206,250);
       rect(300,100,210,60);
-      textSize(22);
+      textSize(11);
       fill(0, 0, 0);
-      text("Keyboard+Mouse",310,138);
+      text("Keyboard and Mouse",308,138);
 
       mouse=loadImage("mouse.png");
       mouse.resize((int)(mouse.width*1.2),(int)(mouse.height*1.2));
@@ -111,7 +114,7 @@ void draw() {
     stroke(0,0,0);
     fill(255,255,255);
     rect(900, 100, 180, 60);
-    textSize(24);
+    textSize(14);
     fill(0, 0, 0);
 
     text("Start Game",922,140);
@@ -136,6 +139,9 @@ void draw() {
     if ((ammoP==0 && ammoE==0)||!allEntities.contains(player)){
       mode=2;
     }
+    else if(allEntities.size()==1&&allEntities.contains(player)){
+      mode=4;
+    }
     for (int i=0; i<allEntities.size(); i++) {
       Entity currentEntity = allEntities.get(i);
       currentEntity.display();
@@ -158,10 +164,10 @@ void draw() {
     hudp.display();
     hude.display();
     fill(255, 255, 255);
-    textSize(18);
-    text(": "+ammoP, 730, 727);
-    text(": "+ammoE, 795, 727);
-    textSize(22);
+    textSize(10);
+    text(":"+ammoP, 730, 727);
+    text(":"+ammoE, 795, 727);
+    textSize(12);
     
     text("Ammo", 700, 700);
     text("In Use:",1000,725);
@@ -175,7 +181,7 @@ void draw() {
     }
     fill(255,255,255);
     text("Health", 50, 700);
-    textSize(32);
+    textSize(16);
     text("Magnetic Field Changes In: "+intervalCountdown, 700, 60); 
     text("Level "+level, 50, 60);
 
@@ -194,11 +200,30 @@ void draw() {
     stroke(0,0,0);
     fill(255,255,255);
     rect(490, 360, 240, 80);
-    textSize(40);
+    textSize(20);
     fill(0, 0, 0);
     go.resize(420,70);
     image(go, 390, 200);
     text("Play Again",510,412);
+  }
+  if(mode==4){
+    background(178, 255, 178);
+    stroke(0,0,0);
+    textSize(50);
+    text("Cleared Level "+level,280,240);
+    fill(255,255,255);
+    rect(490, 360, 240, 80);
+    textSize(21);
+    fill(0, 0, 0);
+
+    text("Next Level",510,412);
+    stroke(0,0,0);
+    fill(255,255,255);
+    rect(490, 460, 240, 80);
+    textSize(21);
+    fill(0, 0, 0);
+
+    text("Main Menu",520,512);
   }
 }
 
@@ -401,7 +426,6 @@ void mouseClicked() {
     if(mode==2){
       if(mouseX>=490 && mouseX<=730 && mouseY>=360 && mouseY<=440){
         reset(level);
-        println(ammoP);
         mode=1;
       }
     }
@@ -419,5 +443,16 @@ void mouseClicked() {
   }
   else if(mode==1){
     player.shoot(mouseX, mouseY);
+  }
+  else if(mode==4){
+      if(mouseX>=490 && mouseX<=730 && mouseY>=360 && mouseY<=440){
+        level+=1;
+        reset(level);
+        mode=1;
+      }
+      else if(mouseX>=490 && mouseX<=730 && mouseY>=460 && mouseY<=540){
+        reset(level);
+        mode=0;
+      }
   }
 }
