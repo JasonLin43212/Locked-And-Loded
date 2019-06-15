@@ -66,7 +66,7 @@ void draw() {
     text("Use the WASD keys to move the player", 120, 430);
     shift.resize((int)(shift.width*1.5), (int)(shift.height*1.5));
     image(shift, 120, 450);
-    text("Use the Shift key to switch bullets", 120, 550);
+    text("Use the Shift key to switch projectiles", 120, 550);
     if (!wmouse) {
       fill(135, 206, 250);
       rect(100, 100, 180, 60);
@@ -336,11 +336,11 @@ void getLevel(int level) {
         player = new Player(j*40+20, i*40+95);
         map[j][i] = ' ';
       } else if (cur_char == 'z') {
-        allEntities.add(new Enemy(j*40, i*40+75, "p", color(50, 40, 30), nextEntityId));
+        allEntities.add(new Enemy(j*40, i*40+75, "p", color(255,127,80), nextEntityId));
         nextEntityId++;
         map[j][i] = ' ';
       } else if (cur_char == 'y') {
-        allEntities.add(new Enemy(j*40, i*40+75, "e", color(50, 40, 30), nextEntityId));
+        allEntities.add(new Enemy(j*40, i*40+75, "e", color(255,0,255), nextEntityId));
         nextEntityId++;
         map[j][i] = ' ';
       } else {
@@ -375,9 +375,9 @@ String print2DArr (char[][] arr) {
 
 void keyPressed() {
   if (keyCode == 37 && !wmouse) {
-    player.direction += PI/22;
+    player.direction += PI/22.5;
   } else if (keyCode == 39 && !wmouse) {
-    player.direction -= PI/22;
+    player.direction -= PI/22.5;
   } else {
     player.controlMovement(keyCode, 1);
   }
