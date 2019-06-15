@@ -6,6 +6,7 @@ Electron hude=new Electron(785, 720, new PVector(0, 0),-1);
 int nextEntityId = 0;
 ArrayList<Projectile> allProjectiles = new ArrayList<Projectile>();
 ArrayList<Entity> allEntities = new ArrayList<Entity>();
+PImage go;
 char[][] map = new char[30][15];
 int timeInterval = 0;
 String[] change;
@@ -13,7 +14,9 @@ int changeIndex = -1;
 int level=1;
 int intervalCountdown = 0;
 int ammoE=100, ammoP=100;
-//add it to the map
+int mode=0;
+int bullet=1;
+boolean wmouse = false;
 
 void setup() {
   // each tile is 40x40 pixel
@@ -22,61 +25,176 @@ void setup() {
   size(1200, 750);
   getLevel(level);
   allEntities.add(player);
+  go=loadImage("GOver.png");
 }
-
+public void reset(int level) {
+  this.level=level;
+  allEntities = new ArrayList<Entity>();
+  getLevel(level);
+  allEntities.add(player);
+  allProjectiles = new ArrayList<Projectile>();
+  ammoE=100;
+  ammoP=100;
+  bullet=1;
+  wmouse = false;
+}
 void draw() {
-  background(60, 90, 120);
-  drawMap();
-  for (int i=0; i<allProjectiles.size(); i++) {
-    Projectile currentProjectile = allProjectiles.get(i);
-    currentProjectile.display();
-    currentProjectile.move();
-    if (currentProjectile.v.mag() < 1.5) {
-      allProjectiles.remove(currentProjectile);
-      i -= 1;
+  if(mode==0){
+    background(178, 255, 178);
+    stroke(0,0,0);
+    fill(255,255,255);
+    rect(490, 360, 240, 80);
+    textSize(40);
+    fill(0, 0, 0);
+
+    text("Start Game",505,412);
+    stroke(0,0,0);
+    fill(255,255,255);
+    rect(490, 460, 240, 80);
+    textSize(37);
+    fill(0, 0, 0);
+
+    text("Instructions",505,512);
+  }
+  if(mode==3){
+    background(238, 238,238);
+    PImage arrows,space,shift,wasd,mouse;
+    wasd=loadImage("wasd.png");
+    shift=loadImage("shift.png");
+    textSize(22);
+    fill(0, 0, 0);
+    wasd.resize((int)(wasd.width*1.5), (int)(wasd.height*1.5));
+    image(wasd,100,230);
+    text("Use the WASD keys to move the player",120,430);
+    shift.resize((int)(shift.width*1.5), (int)(shift.height*1.5));
+    image(shift,120,450);
+    text("Use the Shift key to switch bullets",120,550);
+    if(!wmouse){
+      fill(135,206,250);
+      rect(100,100,180,60);
+      textSize(24);
+      fill(0, 0, 0);
+      text("Keyboard",135,140);
+      fill(255,255,255);
+      rect(300,100,210,60);
+      textSize(22);
+      fill(0, 0, 0);
+      text("Keyboard+Mouse",310,138);
+
+      arrows=loadImage("arrows.png");
+      arrows.resize(281, 209);
+      image(arrows,800,200);
+      text("Use the arrow keys to aim",810,450);
+      space=loadImage("spacebar.png");
+      space.resize((int)(space.width*1.5), (int)(space.height*1.5));
+      image(space,360,570);
+      text("Use the spacebar to shoot",480,680);
+    }
+    else{
+      fill(255,255,255);
+      rect(100,100,180,60);
+      textSize(24);
+      fill(0, 0, 0);
+      text("Keyboard",135,140);
+      fill(135,206,250);
+      rect(300,100,210,60);
+      textSize(22);
+      fill(0, 0, 0);
+      text("Keyboard+Mouse",310,138);
+
+      mouse=loadImage("mouse.png");
+      mouse.resize((int)(mouse.width*1.2),(int)(mouse.height*1.2));
+      image(mouse,800,200);
+      text("Move the mouse to aim",760,500);
+      text("Click the left mouse button to shoot",760,522);
+    }
+    stroke(0,0,0);
+    fill(255,255,255);
+    rect(900, 100, 180, 60);
+    textSize(24);
+    fill(0, 0, 0);
+
+    text("Start Game",922,140);
+  }
+  if(mode==1){
+    background(60, 90, 120);
+    drawMap();
+    for (int i=0; i<allProjectiles.size(); i++) {
+      Projectile currentProjectile = allProjectiles.get(i);
+      currentProjectile.display();
+      currentProjectile.move();
+      if (currentProjectile.v.mag() < 1.5) {
+        allProjectiles.remove(currentProjectile);
+        i -= 1;
+      }
+    }
+    
+    if ((ammoP==0 && ammoE==0)||!allEntities.contains(player)){
+      mode=2;
+    }
+    for (int i=0; i<allEntities.size(); i++) {
+      Entity currentEntity = allEntities.get(i);
+      currentEntity.display();
+      currentEntity.move();
+      for (int j=0; j<allProjectiles.size(); j++){
+        Projectile curProj = allProjectiles.get(j);
+        float killDist = 17.5;
+        if (curProj.charge == -1){
+            killDist = 15; 
+        }
+        if (dist(curProj.x,curProj.y,currentEntity.x,currentEntity.y) <= killDist &&
+        ((curProj.parentId >= 0 && currentEntity.id == -1) || (curProj.parentId == -1 && currentEntity.id != -1))){
+            allEntities.remove(currentEntity);
+            allProjectiles.remove(curProj);
+            i--;
+            break;
+        }
+      }
+    }
+    hudp.display();
+    hude.display();
+    fill(255, 255, 255);
+    textSize(18);
+    text(": "+ammoP, 730, 727);
+    text(": "+ammoE, 795, 727);
+    textSize(22);
+    
+    text("Ammo", 700, 700);
+    text("In Use:",1000,725);
+    if(bullet>0){
+      Proton upr=new Proton(1090, 718, new PVector(0, 0),-1);
+      upr.display();
+    }
+    else{
+      Electron uel=new Electron(1090, 718, new PVector(0, 0),-1);
+      uel.display();
+    }
+    fill(255,255,255);
+    text("Health", 50, 700);
+    textSize(32);
+    text("Magnetic Field Changes In: "+intervalCountdown, 700, 60); 
+    text("Level "+level, 50, 60);
+
+    intervalCountdown--; 
+    if (intervalCountdown == 0) {
+      intervalCountdown = timeInterval;
+      changeIndex++;
+      if (changeIndex == change.length) {
+        changeIndex = 0;
+      }
+      changeFields();
     }
   }
-  for (int i=0; i<allEntities.size(); i++) {
-    Entity currentEntity = allEntities.get(i);
-    currentEntity.display();
-    currentEntity.move();
-    for (int j=0; j<allProjectiles.size(); j++){
-       Projectile curProj = allProjectiles.get(j);
-       float killDist = 17.5;
-       if (curProj.charge == -1){
-          killDist = 15; 
-       }
-       if (dist(curProj.x,curProj.y,currentEntity.x,currentEntity.y) <= killDist &&
-       ((curProj.parentId >= 0 && currentEntity.id == -1) || (curProj.parentId == -1 && currentEntity.id != -1))){
-          allEntities.remove(currentEntity);
-          allProjectiles.remove(curProj);
-          i--;
-          break;
-       }
-    }
-  }
-  hudp.display();
-  hude.display();
-  fill(255, 255, 255);
-  textSize(18);
-  text(": "+ammoP, 730, 727);
-  text(": "+ammoE, 795, 727);
-  textSize(22);
-
-  text("Ammo", 700, 700);
-  text("Health", 50, 700);
-  textSize(32);
-  text("Magnetic Field Changes In: "+intervalCountdown, 700, 60); 
-  text("Level "+level, 50, 60);
-
-  intervalCountdown--; 
-  if (intervalCountdown == 0) {
-    intervalCountdown = timeInterval;
-    changeIndex++;
-    if (changeIndex == change.length) {
-      changeIndex = 0;
-    }
-    changeFields();
+  if(mode==2){
+    background(0,0, 0);
+    stroke(0,0,0);
+    fill(255,255,255);
+    rect(490, 360, 240, 80);
+    textSize(40);
+    fill(0, 0, 0);
+    go.resize(420,70);
+    image(go, 390, 200);
+    text("Play Again",510,412);
   }
 }
 
@@ -258,7 +376,8 @@ void keyPressed() {
 void keyReleased() {
   if (keyCode == 32) {
     player.shoot(mouseX, mouseY);
-  } else if (keyCode==17) {
+  } 
+  else if (keyCode==16){
     player.change();
   } else {
     player.controlMovement(keyCode, 0);
@@ -266,5 +385,35 @@ void keyReleased() {
 }
 
 void mouseClicked() {
-  player.shoot(mouseX, mouseY);
+  if(mode==0 || mode==2){
+    if(mode==0){
+      if(mouseX>=490 && mouseX<=730 && mouseY>=360 && mouseY<=440){
+        mode=1;
+      }
+      else if(mouseX>=490 && mouseX<=730 && mouseY>=460 && mouseY<=540){
+        mode=3;
+      }
+    }
+    if(mode==2){
+      if(mouseX>=490 && mouseX<=730 && mouseY>=360 && mouseY<=440){
+        reset(level);
+        println(ammoP);
+        mode=1;
+      }
+    }
+  }
+  else if(mode==3){
+    if(mouseX>=100 && mouseX<=280 && mouseY>=100 && mouseY<=160){
+      wmouse=false;
+    }
+    else if(mouseX>=300 && mouseX<=510 && mouseY>=100 && mouseY<=160){
+      wmouse=true;
+    }
+    else if(mouseX>=900 && mouseX<=1080 && mouseY>=100 && mouseY<=160){
+      mode=1;
+    }
+  }
+  else if(mode==1){
+    player.shoot(mouseX, mouseY);
+  }
 }

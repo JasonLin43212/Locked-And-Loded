@@ -101,7 +101,7 @@ public class Enemy extends Entity {
             bulletDirection.normalize().mult(3.5), id));
         }
       }
-      shootingCounter = 10;
+      shootingCounter = 100;
     }
   }
 

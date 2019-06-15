@@ -24,5 +24,6 @@ public class Player extends Entity {
   }
   public void change() {
     mode=-mode;
+    bullet=-bullet;
   }
 }
