@@ -60,13 +60,6 @@ void draw() {
     fill(0, 0, 0);
 
     text("Controls", 522, 512);
-    stroke(0,0,0);
-    fill(255,255,255);
-    rect(490, 560, 240, 80);
-    textSize(18);
-    fill(0, 0, 0);
-
-    text("Instructions", 508, 612);
   }
   if (mode==3) {
     background(238, 238, 238);
@@ -205,7 +198,7 @@ void draw() {
     fill(255, 255, 255);
     text("Locked & Loded"+"\u2122", 50, 700);
     textSize(16);
-    text("Magnetic Field Changes In: "+intervalCountdown, 700, 60); 
+    text("Magnetic Field Changes In: "+ ((intervalCountdown/60)+1) + " sec", 650, 60); 
     text("Level "+level, 50, 60);
     if(running){
       intervalCountdown--; 

@@ -28,9 +28,11 @@ public class Enemy extends Entity {
         float testY = this.y+testDirection.normalize().y*16;
         
         int numBounce = 0;
-        while (map[(int)(testX/40)][(int)((testY-75)/40)] != 'X' && foundDirection == false && numBounce != 2){
+        int checkDuration = 0;
+        while (map[(int)(testX/40)][(int)((testY-75)/40)] != 'X' && foundDirection == false && numBounce != 2 && checkDuration < 3000){
           //fill(30,30,30);
           //ellipse(testX,testY,5,5);
+          checkDuration++;
           int field=(int) map[(int)(testX/40)][(int)((testY-75)/40)];
           int bf=0;
           if (field>48 && field<58) {
