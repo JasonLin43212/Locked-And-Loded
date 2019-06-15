@@ -1,0 +1,19 @@
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                            X
+X                            X
+X                        y   X
+X                            X
+X                            X
+X                            X
+X                            X
+X                            X
+X                            X
+XaaaaXXXXX                   X
+Xgggg6666X                   X
+XXXXX6666X                   X
+X P O6666X                   X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+1000
+0
+100
+100

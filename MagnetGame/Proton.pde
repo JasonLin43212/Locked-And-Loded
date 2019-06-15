@@ -3,7 +3,12 @@ public class Proton extends Projectile {
     super(xcor, ycor, v, true, 1, 0,parentId);
   }
   public void display() {
-    fill(0, 255, 255);
+    if (parentId == -1){
+      fill(0, 255, 255);
+    }
+    else {
+      fill(255,127,80); 
+    }
     stroke(1);
     ellipse(super.x, super.y, 15, 15);
     strokeWeight(3);

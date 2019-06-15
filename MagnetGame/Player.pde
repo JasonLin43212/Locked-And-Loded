@@ -7,7 +7,13 @@ public class Player extends Entity {
   }
 
   public void shoot(float x, float y) {
-    PVector bulletDirection = new PVector(x - this.x, y - this.y);
+    PVector bulletDirection;
+    if (wmouse){
+      bulletDirection = new PVector(x-this.x,y-this.y);
+    }
+    else {
+      bulletDirection = PVector.fromAngle(direction);
+    }
     if (mode>0) {
       if (ammoP>0) {  
         ammoP--;
@@ -25,5 +31,17 @@ public class Player extends Entity {
   public void change() {
     mode=-mode;
     bullet=-bullet;
+  }
+
+  public void display() {
+    super.display();                  
+    if (wmouse){
+       direction = atan2(mouseY-y,mouseX-x); 
+    }
+    pushMatrix();
+    translate(x, y);
+    rotate(direction);
+    triangle(18, 0, 13,4,13,-4);
+    popMatrix();
   }
 }

@@ -51,12 +51,14 @@ public abstract class Projectile {
       x-=v.x;
       v.x= -v.x;
       v.mult(0.53);
+      numBounces++;
     }
     y+=v.y;
     if(map[(int)(x/40)][(int)((y-70)/40)]=='X'||map[(int)(x/40)][(int)((y-80)/40)]=='X'){
       y-=v.y;
       v.y= -v.y;
       v.mult(0.53);
+      numBounces++;
     }
   }
 }
