@@ -1,17 +1,17 @@
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-X                            X
-X                            X
-X z                          X
-X                            X
-X             y    y         X
-X                            X
-X                            X
-X                            X
-X        11111111            X
-X        11111111            X
-X        11111111            X
-X                            X
-X    P                       X
+XOOOOOOOOOOOOOOOOOOOOOOOOOOOOX
+XOOOOOOOOOOOOOOOOOOOOOOOOOOOOX
+XOOOOOOOOOOOOOOOOOOOOOOOOOOOOX
+XOOOOOOOOOOOOOOXXXXXXXXXXXXXXX
+XOOOOOOOOOOOOOOX     OgggggggX
+XOOOOOOOOOOOOOOX     OgggggggX
+XOOOOOOOOOOOOOOX  z  OgggggggX
+XOOOOOOOOOOOOOOXOOOOOOgggggggX
+XOOOOOOOOOOOOOOX      gggggggX
+XXXXXXXXXXXXXXXXXXXXXXgggggggX
+X      O              gggggggX
+X   P  O              gggggggX
+X      O              gggggggX
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-300
--5,0
+500
+0

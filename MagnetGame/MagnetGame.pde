@@ -31,7 +31,7 @@ void draw() {
     Projectile currentProjectile = allProjectiles.get(i);
     currentProjectile.display();
     currentProjectile.move();
-    if (currentProjectile.v.mag() < 0.5) {
+    if (currentProjectile.v.mag() < 1.5) {
       allProjectiles.remove(currentProjectile);
       i -= 1;
     }

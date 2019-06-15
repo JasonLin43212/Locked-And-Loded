@@ -15,16 +15,93 @@ public class Enemy extends Entity {
     shootingCounter--;
     if (shootingCounter == 0) {
       char curProj = projectiles.charAt((int)random(projectiles.length()));
-      if (curProj == 'p') {
-        PVector bulletDirection = new PVector(x - this.x, y - this.y);
-        allProjectiles.add(new Proton(this.x+bulletDirection.normalize().x*16, this.y+bulletDirection.normalize().y*16, 
-          bulletDirection.normalize().mult(3), id));
-      } else if (curProj == 'e') {
-        PVector bulletDirection = new PVector(x - this.x, y - this.y);
-        allProjectiles.add(new Electron(this.x+bulletDirection.normalize().x*11, this.y+bulletDirection.normalize().y*11,
-        bulletDirection.normalize().mult(3.5), id));
+      PVector bulletDirection = new PVector(0,0);
+      boolean foundDirection = false;
+      for (int i=0; i<40; i++) {
+        if (foundDirection){
+          //print("found direction");
+           break; 
+        }
+        bulletDirection = PVector.fromAngle(i*2*PI/40);
+        PVector testDirection = PVector.fromAngle(i*2*PI/40);
+        float testX = this.x+testDirection.normalize().x*16;
+        float testY = this.y+testDirection.normalize().y*16;
+        
+        int numBounce = 0;
+        while (map[(int)(testX/40)][(int)((testY-75)/40)] != 'X' && foundDirection == false && numBounce != 2){
+          //fill(30,30,30);
+          //ellipse(testX,testY,5,5);
+          int field=(int) map[(int)(testX/40)][(int)((testY-75)/40)];
+          int bf=0;
+          if (field>48 && field<58) {
+            bf=field-48;
+          }
+          if (field>96 && field<106) {
+            bf=field-96;
+            bf=-bf;
+          }
+          if (curProj == 'p') {
+            PVector B=new PVector(0, 0, bf*0.009);
+            if (bf!=0) {
+              PVector a=testDirection.normalize().mult(3).cross(B)
+                .mult(1)
+                .div(2);
+              testDirection.add(a);
+            }
+            testX+=testDirection.x;
+            //println("testx:"+testX);
+            //println("testy:"+testY);
+            if (map[(int)((testX-5)/40)][(int)((testY-75)/40)]=='X'||map[(int)((testX+5)/40)][(int)((testY-75)/40)]=='X') {
+              testX-=testDirection.x;
+              testDirection.x= -testDirection.x;
+              testDirection.mult(0.53);
+              numBounce++;
+            }
+            testY+=testDirection.y;
+            if (map[(int)(testX/40)][(int)((testY-70)/40)]=='X'||map[(int)(testX/40)][(int)((testY-80)/40)]=='X') {
+              testY-=testDirection.y;
+              testDirection.y= -testDirection.y;
+              testDirection.mult(0.53);
+              numBounce++;
+            }
+          } else if (curProj == 'e') {
+            PVector B=new PVector(0, 0, bf*0.009);
+            if (bf!=0) {
+              PVector a=testDirection.normalize().mult(3.5).cross(B)
+                .mult(-1)
+                .div(0.5);
+              testDirection.add(a);
+            }
+            testX+=testDirection.x;
+            if (map[(int)((testX-5)/40)][(int)((testY-75)/40)]=='X'||map[(int)((testX+5)/40)][(int)((testY-75)/40)]=='X') {
+              testX-=testDirection.x;
+              testDirection.x= -testDirection.x;
+              testDirection.mult(0.53);
+              numBounce++;
+            }
+            testY+=testDirection.y;
+            if (map[(int)(testX/40)][(int)((testY-70)/40)]=='X'||map[(int)(testX/40)][(int)((testY-80)/40)]=='X') {
+              testY-=testDirection.y;
+              testDirection.y= -testDirection.y;
+              testDirection.mult(0.53);
+              numBounce++;
+            }
+          }
+          if (dist(testX,testY,player.x,player.y)<10){
+            foundDirection = true;
+          }
+        }
       }
-      shootingCounter = 100;
+      if (foundDirection) {
+        if (curProj == 'p') {
+          allProjectiles.add(new Proton(this.x+bulletDirection.normalize().x*16, this.y+bulletDirection.normalize().y*16, 
+            bulletDirection.normalize().mult(3), id));
+        } else if (curProj == 'e') {
+          allProjectiles.add(new Electron(this.x+bulletDirection.normalize().x*11, this.y+bulletDirection.normalize().y*11, 
+            bulletDirection.normalize().mult(3.5), id));
+        }
+      }
+      shootingCounter = 10;
     }
   }
 
