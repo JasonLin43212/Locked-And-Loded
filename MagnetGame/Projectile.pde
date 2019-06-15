@@ -39,14 +39,13 @@ public abstract class Projectile {
   }
   public abstract void display();
   public void move() {
-    PVector B=new PVector(0,0,Bfield()*0.005);
+    PVector B=new PVector(0,0,Bfield()*0.009);
     if(Bfield()!=0){
       PVector a=v.cross(B)
         .mult(charge)
         .div(mass);
       v.add(a);
     }
-    //println(v.mag());
     x+=v.x;
     if(map[(int)((x-5)/40)][(int)((y-75)/40)]=='X'||map[(int)((x+5)/40)][(int)((y-75)/40)]=='X'){
       x-=v.x;

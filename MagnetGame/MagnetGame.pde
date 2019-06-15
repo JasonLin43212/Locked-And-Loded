@@ -126,16 +126,12 @@ void draw() {
       Projectile currentProjectile = allProjectiles.get(i);
       currentProjectile.display();
       currentProjectile.move();
-      if (currentProjectile.v.mag() < 0.01) {
+      if (currentProjectile.v.mag() < 1.5) {
         allProjectiles.remove(currentProjectile);
         i -= 1;
       }
     }
-    for (int i=0; i<allEntities.size(); i++) {
-      Entity currentEntity = allEntities.get(i);
-      currentEntity.display();
-      currentEntity.move();
-    }
+    
     if ((ammoP==0 && ammoE==0)||!allEntities.contains(player)){
       mode=2;
     }
