@@ -1,7 +1,7 @@
 public abstract class Entity {
 
   float x, y,direction, speed;
-  int id, up, right, down, left, maxProjectiles, currentProjectiles, cooldown, maxCooldown;
+  int id, up, right, down, rotateLeft,rotateRight, left, maxProjectiles, currentProjectiles, cooldown, maxCooldown;
   color entityColor;
 
   public Entity(float x, float y, float speed, int id, 
@@ -20,9 +20,12 @@ public abstract class Entity {
     this.left = 0;
     this.up = 0;
     this.down = 0;
+    this.rotateLeft = 0;
+    this.rotateRight = 0;
   }
 
   public void move() {
+    direction -= (rotateLeft - rotateRight)*PI/35;
     int hor = right-left;
     int ver = down-up;
     float newX = x+speed*hor;
@@ -179,6 +182,12 @@ public abstract class Entity {
     }
     if (num == 68) {
       right=mode;
+    }
+    if (num == 37){
+      rotateLeft = mode; 
+    }
+    if (num == 39){
+       rotateRight = mode; 
     }
   }
 

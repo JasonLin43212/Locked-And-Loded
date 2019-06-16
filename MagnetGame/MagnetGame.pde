@@ -246,6 +246,10 @@ void draw() {
       go.resize(420, 70);
       image(go, 390, 200);
       text("Play Again", 510, 412);
+      fill(255, 255, 255);
+      rect(490, 460, 240, 80);
+      fill(0, 0, 0);
+      text("Main Menu", 520, 512);
     }
     if (mode==4) {
       fill(0, 100, 0, 50);
@@ -444,13 +448,7 @@ String print2DArr (char[][] arr) {
 }
 
 void keyPressed() {
-  if (keyCode == 37 && !wmouse) {
-    player.direction -= PI/22.5;
-  } else if (keyCode == 39 && !wmouse) {
-    player.direction += PI/22.5;
-  } else {
-    player.controlMovement(keyCode, 1);
-  }
+  player.controlMovement(keyCode, 1);
 }
 
 void keyReleased() {
@@ -485,6 +483,13 @@ void mouseClicked() {
           reset(1);
         }
         mode=1;
+      } else if (mouseX>=490 && mouseX<=730 && mouseY>= 460 && mouseY <=540) {
+        if (saveProgress) {
+          reset(level);
+        } else {
+          reset(1);
+        }
+        mode=0;
       }
     }
   } else if (mode==3) {
