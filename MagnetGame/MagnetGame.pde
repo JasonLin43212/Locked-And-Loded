@@ -44,15 +44,15 @@ public void reset(int level) {
 void draw() {
   textFont(arcade);
   if (mode==0) {
-    //PImage logo=loadImage("logo.png");
+    PImage logo=loadImage("logo.png");
     background(54, 151, 160);
     stroke(0, 0, 0);
     fill(255, 255, 255);
     rect(490, 360, 240, 80);
     textSize(22);
     fill(0, 0, 0);
-    //logo.resize(700, 60);
-    //image(logo, 250, 200);
+    logo.resize(700, 60);
+    image(logo, 250, 200);
     text("Start Game", 508, 412);
     stroke(0, 0, 0);
     fill(255, 255, 255);
