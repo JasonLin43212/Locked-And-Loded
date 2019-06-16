@@ -9,7 +9,7 @@
 * Mohammed Jamil
 
 ## Video Link
-[video link](youtube.com)
+[video link](https://www.youtube.com/watch?v=ls81UTVqocI)
 
 ## Instructions
 To play clone this repository, open one of the .pde files with Processing, and run the program.
