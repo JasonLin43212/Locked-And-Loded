@@ -12,8 +12,8 @@
 [video link](youtube.com)
 
 ## Instructions
-To play either go to this [link](youtube.com) (temporary).
-Or clone this repository, open one of the .pde files with Processing, and run the program.
+To play clone this repository, open one of the .pde files with Processing, and run the program.
+Unfortunately, we were unable to put our code up on Open Processing since it required major changes in our code to make it compatible with the interpreter that Open Processing uses.
 
 To move around, you use the WASD keys and to change projectiles, you use the Shift key. There are two options for aiming and shooting:
 * Mouse to aim and shoot
