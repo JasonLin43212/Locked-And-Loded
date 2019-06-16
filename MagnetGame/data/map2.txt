@@ -1,17 +1,17 @@
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-X            X               X
-X            X  P            X
-X            XOOOOOOOOOOOOOOOX
-X            X5e5e5e5e5e5e5e5X
-X            Xe5e5e5e5e5e5e5eX
-X            X5e5e5e5e5e5e5e5X
-X            Xe5e5e5e5e5e5e5eX
-X            X5e5e5e5e5e5e5e5X
-X            Xe5e5e5e5e5e5e5eX
-X            XOOOOOOOOOOOOOOOX
-X            X          y    X
-X            X               X
-X            X               X
+XOOOOOOOOOOOOX               X
+XOOOOOOOOOOOOX  P            X
+XOOOOOOOOOOOOXOOOOOOOOOOOOOOOX
+XOOOOOOOOOOOOX5e5e5e5e5e5e5e5X
+XOOOOOOOOOOOOXe5e5e5e5e5e5e5eX
+XOOOOOOOOOOOOX5e5e5e5e5e5e5e5X
+XOOOOOOOOOOOOXe5e5e5e5e5e5e5eX
+XOOOOOOOOOOOOX5e5e5e5e5e5e5e5X
+XOOOOOOOOOOOOXe5e5e5e5e5e5e5eX
+XOOOOOOOOOOOOXOOOOOOOOOOOOOOOX
+XOOOOOOOOOOOOX          y    X
+XOOOOOOOOOOOOX               X
+XOOOOOOOOOOOOX               X
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 1000
 0
