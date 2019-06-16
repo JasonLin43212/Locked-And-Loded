@@ -13,7 +13,7 @@
 
 ## Instructions
 To play clone this repository, open one of the .pde files with Processing, and run the program.
-Unfortunately, we were unable to put our code up on Open Processing since it required major changes in our code to make it compatible with the interpreter that Open Processing uses. We do pray that it works on your Processing.
+Unfortunately, we were unable to put our code up on Open Processing since it required major changes in our code to make it compatible with the interpreter that Open Processing uses. We do pray that it works on your Processing. For reference, we created this project on Processing 3.5.3. You do not need to install any libraries for this project.
 
 To move around, you use the WASD keys and to change projectiles, you use the Shift key. There are two options for aiming and shooting:
 * Mouse to aim and shoot
