@@ -18,6 +18,7 @@ Unfortunately, we were unable to put our code up on Open Processing since it req
 To move around, you use the WASD keys and to change projectiles, you use the Shift key. There are two options for aiming and shooting:
 * Mouse to aim and shoot
 * Left and Right arrow keys to aim and the Space key to shoot
+**You can choose which one to use through the instructions page.**
 Use the controls that fit your situation (e.g., you do not have a mouse).
 
 ## Notes
