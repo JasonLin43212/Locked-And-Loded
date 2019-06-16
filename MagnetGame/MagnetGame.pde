@@ -104,7 +104,7 @@ void draw() {
       arrows=loadImage("arrows.png");
       arrows.resize(281, 209);
       image(arrows, 800, 200);
-      text("Use the arrow keys to aim", 810, 450);
+      text("Use the LEFT and RIGHT arrow keys to aim", 710, 450);
       space=loadImage("spacebar.png");
       space.resize((int)(space.width*1.5), (int)(space.height*1.5));
       image(space, 360, 570);
