@@ -1,17 +1,17 @@
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 X                            X
-X  z     y         z         X
+X                            X
 X      y                     X
 X        fgh567fgh567   y    X
 X       6OOXOOXXOXOOh        X
-X  z    6XO       OXh   y    X
+X  z    6XO       OXh        X
 X       6OO   P   OOh        X
 X       hXO       OX6        X
 X       hOOXOXXXOXOO6      z X
 X        fgh567fgh567        X
-X                            X
+X                      z     X
 X  z         y               X
-X                    z       X
+X                     z      X
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 600
 0,-1,-1,-1,1,1
