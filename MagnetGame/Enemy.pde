@@ -97,13 +97,13 @@ public class Enemy extends Entity {
       if (foundDirection) {
         if (curProj == 'p') {
           allProjectiles.add(new Proton(this.x+bulletDirection.normalize().x*16, this.y+bulletDirection.normalize().y*16, 
-            bulletDirection.normalize().mult(3), id));
+            bulletDirection.normalize().mult(2.5), id));
         } else if (curProj == 'e') {
           allProjectiles.add(new Electron(this.x+bulletDirection.normalize().x*11, this.y+bulletDirection.normalize().y*11, 
-            bulletDirection.normalize().mult(3.5), id));
+            bulletDirection.normalize().mult(3), id));
         }
       }
-      shootingCounter = 100;
+      shootingCounter = 150;
     }
   }
 

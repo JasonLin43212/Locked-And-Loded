@@ -1,19 +1,19 @@
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-X                            X
-X                            X
-X                            X
-X                            X
-X                            X
-X                            X
-X                            X
-X                            X
-X                            X
-X                            X
-X                            X
-X                            X
-X                            X
+X   XOX   XOX z XOX   XOX    X
+X   XOX   XOX   XOX   XOX    X
+X z XOX  yXOX X XOX y XOX  z X
+X   XOX   XOX   XOX   XOX    X
+X   XOX   XOX   XOX   XOX    X
+XOOOXXXOOOXXXOOOXXXOOOXXXOOOOX
+XO99OOOOO0OOO P OOO0OOOOO99OOX
+XO99OOOOO0OOO   OOO0OOOOO99OOX
+XOOOXXXOOOXXXOOOXXXOOOXXXOOOOX
+X   XOX   XOX   XOX   XOX    X
+X   XOX   XOX X XOX   XOX    X
+X y XOX z XOX y XOX z XOX y  X
+X   XOX   XOX   XOX   XOX    X
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 300
-0
-50
-50
+-5,-4,4,5
+100
+100

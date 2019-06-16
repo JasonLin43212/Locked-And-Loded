@@ -11,7 +11,7 @@ char[][] map = new char[30][15];
 int timeInterval = 0;
 String[] change;
 int changeIndex = -1;
-int level=6;
+int level=1;
 int intervalCountdown = 0;
 int ammoE = -1, ammoP = -1;
 int mode=0;
@@ -21,12 +21,13 @@ PFont arcade;
 int difficulty = 0;
 boolean wmouse = true;
 boolean running=true;
+boolean saveProgress = false;
 
 void setup() {
   // each tile is 40x40 pixel
   // 30 by 15 board
   //75 pixels top and bottom for HUD
-  arcade=createFont("ARCADE_N.TTF",10);
+  arcade=createFont("ARCADE_N.TTF", 10);
   size(1200, 750);
   getLevel(level);
   allEntities.add(player);
@@ -42,28 +43,38 @@ public void reset(int level) {
 }
 void draw() {
   textFont(arcade);
-  if(mode==0){
-    PImage logo=loadImage("logo.png");
+  if (mode==0) {
+    //PImage logo=loadImage("logo.png");
     background(54, 151, 160);
     stroke(0, 0, 0);
     fill(255, 255, 255);
     rect(490, 360, 240, 80);
     textSize(22);
     fill(0, 0, 0);
-    logo.resize(700, 60);
-    image(logo, 250, 200);
-    text("Start Game",508,412);
-    stroke(0,0,0);
-    fill(255,255,255);
+    //logo.resize(700, 60);
+    //image(logo, 250, 200);
+    text("Start Game", 508, 412);
+    stroke(0, 0, 0);
+    fill(255, 255, 255);
     rect(490, 460, 240, 80);
     textSize(22);
     fill(0, 0, 0);
 
     text("Controls", 522, 512);
+    stroke(0, 0, 0);
+    if (!saveProgress) {
+      fill(255, 255, 255);
+    } else {
+      fill(135, 206, 250);
+    }
+    rect(490, 560, 240, 80);
+    textSize(16);
+    fill(0, 0, 0);
+    text("Save Progress?", 502, 612);
   }
   if (mode==3) {
     background(238, 238, 238);
-    PImage arrows, space, shift, wasd, mouse,p;
+    PImage arrows, space, shift, wasd, mouse, p;
     wasd=loadImage("wasd.png");
     shift=loadImage("shift.png");
     p=loadImage("P.png");
@@ -73,22 +84,22 @@ void draw() {
     image(wasd, 100, 230);
     p.resize((int)(p.width*1.5), (int)(p.height*1.5));
     image(p, 530, 200);
-    text("Press P to pause/unpause",480,310);
+    text("Press P to pause/unpause", 480, 310);
     text("Use the WASD keys to move the player", 120, 430);
     shift.resize((int)(shift.width*1.5), (int)(shift.height*1.5));
-    image(shift,120,450);
-    text("Use the Shift key to switch bullets",120,550);
-    if(!wmouse){
-      fill(135,206,250);
-      rect(100,100,180,60);
+    image(shift, 120, 450);
+    text("Use the Shift key to switch bullets", 120, 550);
+    if (!wmouse) {
+      fill(135, 206, 250);
+      rect(100, 100, 180, 60);
       textSize(14);
       fill(0, 0, 0);
-      text("Keyboard",135,140);
-      fill(255,255,255);
-      rect(300,100,210,60);
+      text("Keyboard", 135, 140);
+      fill(255, 255, 255);
+      rect(300, 100, 210, 60);
       textSize(11);
       fill(0, 0, 0);
-      text("Keyboard and Mouse",308,138);
+      text("Keyboard and Mouse", 308, 138);
 
       arrows=loadImage("arrows.png");
       arrows.resize(281, 209);
@@ -96,20 +107,19 @@ void draw() {
       text("Use the arrow keys to aim", 810, 450);
       space=loadImage("spacebar.png");
       space.resize((int)(space.width*1.5), (int)(space.height*1.5));
-      image(space,360,570);
-      text("Use the spacebar to shoot",480,680);
-    }
-    else{
-      fill(255,255,255);
-      rect(100,100,180,60);
+      image(space, 360, 570);
+      text("Use the spacebar to shoot", 480, 680);
+    } else {
+      fill(255, 255, 255);
+      rect(100, 100, 180, 60);
       textSize(14);
       fill(0, 0, 0);
-      text("Keyboard",135,140);
-      fill(135,206,250);
-      rect(300,100,210,60);
+      text("Keyboard", 135, 140);
+      fill(135, 206, 250);
+      rect(300, 100, 210, 60);
       textSize(11);
       fill(0, 0, 0);
-      text("Keyboard and Mouse",308,138);
+      text("Keyboard and Mouse", 308, 138);
 
       mouse=loadImage("mouse.png");
       mouse.resize((int)(mouse.width*1.2), (int)(mouse.height*1.2));
@@ -124,60 +134,67 @@ void draw() {
     fill(0, 0, 0);
 
     text("Start Game", 922, 140);
+    stroke(0, 0, 0);
+    fill(255, 255, 255);
+    rect(700, 100, 180, 60);
+    textSize(14);
+    fill(0, 0, 0);
+
+    text("Main Menu", 730, 140);
   }
   if (mode==1) {
     background(60, 90, 120);
     drawMap();
-    
+
+    for (int i=0; i<allProjectiles.size(); i++) {
+      Projectile currentProjectile = allProjectiles.get(i);
+      currentProjectile.display();
+      if (running) {
+        currentProjectile.move();
+      }
+      if (currentProjectile.numBounces >= 2) {
+        allProjectiles.remove(currentProjectile);
+        i -= 1;
+      }
+    }
+    if (allEntities.size()==1&&allEntities.contains(player)) {
+      mode=4;
+    }
+    if (!allEntities.contains(player)) {
+      mode=2;
+    }
+    if (ammoP == 0 && ammoE == 0) {
+      int playerProj = 0;
       for (int i=0; i<allProjectiles.size(); i++) {
-        Projectile currentProjectile = allProjectiles.get(i);
-        currentProjectile.display();
-        if(running){
-          currentProjectile.move();
-        }
-        if (currentProjectile.numBounces >= 2) {
-          allProjectiles.remove(currentProjectile);
-          i -= 1;
+        if (allProjectiles.get(i).parentId == -1) {
+          playerProj++;
         }
       }
-      if(allEntities.size()==1&&allEntities.contains(player)){
-        mode=4;
+      if (playerProj == 0) {
+        mode = 2;
       }
-      if (!allEntities.contains(player)) {
-        mode=2;
+    }
+    for (int i=0; i<allEntities.size(); i++) {
+      Entity currentEntity = allEntities.get(i);
+      currentEntity.display();
+      if (running) {
+        currentEntity.move();
       }
-      if (ammoP == 0 && ammoE == 0) {
-        int playerProj = 0;
-        for (int i=0; i<allProjectiles.size(); i++) {
-          if (allProjectiles.get(i).parentId == -1) {
-            playerProj++;
-          }
+      for (int j=0; j<allProjectiles.size(); j++) {
+        Projectile curProj = allProjectiles.get(j);
+        float killDist = 17.5;
+        if (curProj.charge == -1) {
+          killDist = 15;
         }
-        if (playerProj == 0) {
-          mode = 2;
-        }
-      }
-      for (int i=0; i<allEntities.size(); i++) {
-        Entity currentEntity = allEntities.get(i);
-        currentEntity.display();
-        if(running){
-          currentEntity.move();
-        }
-        for (int j=0; j<allProjectiles.size(); j++) {
-          Projectile curProj = allProjectiles.get(j);
-          float killDist = 17.5;
-          if (curProj.charge == -1) {
-            killDist = 15;
-          }
-          if (dist(curProj.x, curProj.y, currentEntity.x, currentEntity.y) <= killDist &&
-            ((curProj.parentId >= 0 && currentEntity.id == -1) || (curProj.parentId == -1 && currentEntity.id != -1))) {
-            allEntities.remove(currentEntity);
-            allProjectiles.remove(curProj);
-            i--;
-            break;
-          }
+        if (dist(curProj.x, curProj.y, currentEntity.x, currentEntity.y) <= killDist &&
+          ((curProj.parentId >= 0 && currentEntity.id == -1) || (curProj.parentId == -1 && currentEntity.id != -1))) {
+          allEntities.remove(currentEntity);
+          allProjectiles.remove(curProj);
+          i--;
+          break;
         }
       }
+    }
     hudp.display();
     hude.display();
     fill(255, 255, 255);
@@ -200,27 +217,27 @@ void draw() {
     textSize(16);
     text("Magnetic Field Changes In: "+ ((intervalCountdown/60)+1) + " sec", 650, 60); 
     text("Level "+level, 50, 60);
-    if(running){
+    if (running) {
       intervalCountdown--; 
       if (intervalCountdown == 0) {
         intervalCountdown = timeInterval;
         changeIndex++;
-        if (changeIndex == change.length) {
+        if (changeIndex >= change.length) {
           changeIndex = 0;
         }
         changeFields();
       }
     }
-    if(!running){
-      fill(0,0,0,200);
-      rect(0,0,1200,750);
-      fill(255,255,255);
+    if (!running) {
+      fill(0, 0, 0, 200);
+      rect(0, 0, 1200, 750);
+      fill(255, 255, 255);
       textSize(50);
-      text("Paused",450,340);
+      text("Paused", 450, 340);
     }
-    if(mode==2){
-      fill(0,0,0,200);
-      rect(0,0,1200,750);
+    if (mode==2) {
+      fill(0, 0, 0, 200);
+      rect(0, 0, 1200, 750);
       stroke(0, 0, 0);
       fill(255, 255, 255);
       rect(490, 360, 240, 80);
@@ -230,34 +247,32 @@ void draw() {
       image(go, 390, 200);
       text("Play Again", 510, 412);
     }
-    if(mode==4){
-      fill(0,100,0 ,50);
-      rect(0,0,1200,750);
-      stroke(0,0,0);
-      fill(255,255,255);
+    if (mode==4) {
+      fill(0, 100, 0, 50);
+      rect(0, 0, 1200, 750);
+      stroke(0, 0, 0);
+      fill(255, 255, 255);
       textSize(50);
-      text("Cleared Level "+level,280,240);
-      if(level!=6){
-        fill(255,255,255);
+      text("Cleared Level "+level, 280, 240);
+      if (level!=6) {
+        fill(255, 255, 255);
         rect(490, 360, 240, 80);
         textSize(21);
         fill(0, 0, 0);
 
-        text("Next Level",510,412);
+        text("Next Level", 510, 412);
+      } else {
+        text("You Win", 450, 380);
       }
-      else{
-        text("You Win",450,380);
-      }
-      stroke(0,0,0);
-      fill(255,255,255);
+      stroke(0, 0, 0);
+      fill(255, 255, 255);
       rect(490, 460, 240, 80);
       textSize(21);
       fill(0, 0, 0);
 
-      text("Main Menu",520,512);
+      text("Main Menu", 520, 512);
     }
   }
-
 }
 
 void changeFields() {
@@ -391,11 +406,11 @@ void getLevel(int level) {
         player = new Player(j*40+20, i*40+95);
         map[j][i] = ' ';
       } else if (cur_char == 'z') {
-        allEntities.add(new Enemy(j*40, i*40+75, "p", color(255,127,80), nextEntityId));
+        allEntities.add(new Enemy(j*40, i*40+75, "p", color(255, 127, 80), nextEntityId));
         nextEntityId++;
         map[j][i] = ' ';
       } else if (cur_char == 'y') {
-        allEntities.add(new Enemy(j*40, i*40+75, "e", color(255,0,255), nextEntityId));
+        allEntities.add(new Enemy(j*40, i*40+75, "e", color(255, 0, 255), nextEntityId));
         nextEntityId++;
         map[j][i] = ' ';
       } else {
@@ -430,9 +445,9 @@ String print2DArr (char[][] arr) {
 
 void keyPressed() {
   if (keyCode == 37 && !wmouse) {
-    player.direction += PI/22.5;
-  } else if (keyCode == 39 && !wmouse) {
     player.direction -= PI/22.5;
+  } else if (keyCode == 39 && !wmouse) {
+    player.direction += PI/22.5;
   } else {
     player.controlMovement(keyCode, 1);
   }
@@ -440,12 +455,12 @@ void keyPressed() {
 
 void keyReleased() {
   if (keyCode == 32) {
-     player.shoot(mouseX, mouseY);
+    player.shoot(mouseX, mouseY);
   }
   if (keyCode==16) {
     player.change();
   }
-  if (keyCode==80){
+  if (keyCode==80) {
     running=!running;
   }
   player.controlMovement(keyCode, 0);
@@ -458,11 +473,17 @@ void mouseClicked() {
         mode=1;
       } else if (mouseX>=490 && mouseX<=730 && mouseY>=460 && mouseY<=540) {
         mode=3;
+      } else if (mouseX >= 490 && mouseX<730 && mouseY>560 && mouseY<640) {
+        saveProgress = !saveProgress;
       }
     }
-    if(mode==2){
-      if(mouseX>=490 && mouseX<=730 && mouseY>=360 && mouseY<=440){
-        reset(1);
+    if (mode==2) {
+      if (mouseX>=490 && mouseX<=730 && mouseY>=360 && mouseY<=440) {
+        if (saveProgress) {
+          reset(level);
+        } else {
+          reset(1);
+        }
         mode=1;
       }
     }
@@ -473,19 +494,19 @@ void mouseClicked() {
       wmouse=true;
     } else if (mouseX>=900 && mouseX<=1080 && mouseY>=100 && mouseY<=160) {
       mode=1;
+    } else if (mouseX>=700 && mouseX<=880 && mouseY>=100 && mouseY<=160) {
+      mode = 0;
     }
   } else if (mode==1) {
     player.shoot(mouseX, mouseY);
-  }
-  else if(mode==4){
-      if(mouseX>=490 && mouseX<=730 && mouseY>=360 && mouseY<=440){
-        level+=1;
-        reset(level);
-        mode=1;
-      }
-      else if(mouseX>=490 && mouseX<=730 && mouseY>=460 && mouseY<=540){
-        reset(1);
-        mode=0;
-      }
+  } else if (mode==4) {
+    if (mouseX>=490 && mouseX<=730 && mouseY>=360 && mouseY<=440) {
+      level+=1;
+      reset(level);
+      mode=1;
+    } else if (mouseX>=490 && mouseX<=730 && mouseY>=460 && mouseY<=540) {
+      reset(1);
+      mode=0;
+    }
   }
 }
