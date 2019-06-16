@@ -237,12 +237,17 @@ void draw() {
       fill(255,255,255);
       textSize(50);
       text("Cleared Level "+level,280,240);
-      fill(255,255,255);
-      rect(490, 360, 240, 80);
-      textSize(21);
-      fill(0, 0, 0);
+      if(level!=6){
+        fill(255,255,255);
+        rect(490, 360, 240, 80);
+        textSize(21);
+        fill(0, 0, 0);
 
-      text("Next Level",510,412);
+        text("Next Level",510,412);
+      }
+      else{
+        text("You Win",450,380);
+      }
       stroke(0,0,0);
       fill(255,255,255);
       rect(490, 460, 240, 80);
