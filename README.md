@@ -18,6 +18,8 @@ Unfortunately, we were unable to put our code up on Open Processing since it req
 To move around, you use the WASD keys and to change projectiles, you use the Shift key. There are two options for aiming and shooting:
 * Mouse to aim and shoot
 * Left and Right arrow keys to aim and the Space key to shoot
+
+**You can choose which one to use through the instructions page.**
 Use the controls that fit your situation (e.g., you do not have a mouse).
 
 ## Notes
@@ -26,3 +28,6 @@ Use the controls that fit your situation (e.g., you do not have a mouse).
   The circle path that the projectiles follow is not perfect due to the noncontinuous nature of Processing. In other words, since it is around 60 frames per second if the processor can keep up, the simulation of the path of the particles estimates that of real life, which has many more frames per second than a computer at this time can simulate.
 
   The player can only be damaged by the enemies' projectiles and vice versa. The projectiles are different colors so that it is easy to distinguish between who they belong to.
+  
+## Legend
+![alt text](https://github.com/JasonLin43212/Locked-And-Loded/blob/master/export.png)
