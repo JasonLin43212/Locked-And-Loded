@@ -11,7 +11,7 @@ char[][] map = new char[30][15];
 int timeInterval = 0;
 String[] change;
 int changeIndex = -1;
-int level=1;
+int level=6;
 int intervalCountdown = 0;
 int ammoE = -1, ammoP = -1;
 int mode=0;
