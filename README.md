@@ -22,4 +22,7 @@ Use the controls that fit your situation (e.g. you do not have a mouse).
 
 ## Notes
   When you shoot projectiles, they will be able to bounce off of walls once, after which they will lose speed due to inelastic collision. Upon hitting the walls a second time, the projectiles will lose all of their energy and disappear from the screen as to not lower the frame rate.
+  
   The circle path that the projectiles follow is not perfect due to the noncontinuous nature of Processing. In other words, since it is around 60 frames per second if the processor can keep up, the simulation of the path of the particles estimates that of real life, which has many more frames per second than a computer at this time can simulate.
+
+  The player can only be damaged by the enemies' projectiles and vice versa. The projectiles are colored differently so that it is easy to distinguish between who the projectiles belong to.
