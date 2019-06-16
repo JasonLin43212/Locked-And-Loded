@@ -7,11 +7,11 @@ Xeeeee                  55555X
 X                            X
 X   z                    y   X
 X        z  y     z y        X
-XXXXX           y            X
-XXXXX       y     z       y  X
-XXXXX    z XXXXX  z  y       X
-X   y      XXXXX             X
-X    z     XXXXX          z  X
+XXXXX           y      yXXXXXX
+XXXXX       y     z     XXXXXX
+XXXXX    z XXXXXX z  y  XXXXXX
+X   y      XXXXXX            X
+X    z     XXXXXX         z  X
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 300
 0,-1,1
